@@ -1,19 +1,15 @@
 var username = 'admin';
 var password = 'cinemassive';
-var networkManagerUrl = 'http://CineSouth:25002/CineNet/NetworkManager/';
+var networkManagerUrl = 'http://localhost:25002/CineNet/NetworkManager/';
 var accessToken = null;
+var refreshToken = null;
 var currentDisplayId = null;
 var workspaceId = null;
 var canvasId = null;
 
 $(document).ready(function () {
-
-    getToken().done(function (result) {
-        accessToken = result.access_token;
-        loadDisplays();
-    }).fail(function (result) {
-        alert('ERROR: ' + result.responseText);
-    });
+    login()
+        .then(loadDisplays);
 });
 
 function loadDisplays() {
@@ -59,20 +55,63 @@ function loadDisplays() {
         });
 }
 
-function getToken() {
+function login() {
+    return getSaml()
+        .then(getToken)
+        .then(function (response) {
+            accessToken = response.access_token;
+            refreshToken = response.refresh_token;
+        })
+        .catch(function (result) { alert('ERROR: ' + result.responseText); })
+}
 
+function getSaml() {
     var body = {
-        grant_type: 'password',
-        username: username,
-        password: password
+        Username: username,
+        Password: password
     };
 
     return $.ajax({
         type: "POST",
-        url: networkManagerUrl + 'AuthenticationService/Token',
+        url: networkManagerUrl + 'IdentityProvider/Login',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(body)
+    });
+}
+
+
+function getToken(samlResponse) {
+    var body = {
+        grant_type: "saml20",
+        assertion: btoa(samlResponse)
+    };
+
+    return $.ajax({
+        type: "POST",
+        url: networkManagerUrl + 'Authorization/Token',
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         data: body
+    });
+}
+
+function updateToken() {
+    var body = {
+        grant_type: "refresh_token",
+        refresh_token: refreshToken
+    };
+
+    return $.ajax({
+        type: "POST",
+        url: networkManagerUrl + 'Authorization/Token',
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: body
+    })
+    .catch(function (result) { alert('ERROR: ' + result.responseText); })
+    .then(function(result) {
+        accessToken = result.access_token;
+        refreshToken = result.refresh_token;
     });
 }
 
@@ -151,10 +190,8 @@ function loadLayouts() {
             }
 
             addButtonColumnToRow(row, 'Clear', null, function (clearButton) {
-                getToken()
-                    .done(function (result) {
-                        accessToken = result.access_token;
-
+                updateToken()
+                    .done(function () {
                         var request = {
                             WorkspaceId: workspaceId,
                             CanvasId: canvasId
@@ -174,10 +211,8 @@ function addLayoutColumnToRow(row, layout) {
     addButtonColumnToRow(row, layout.Name, layout.LayoutId, function (layoutButton) {
         var layoutId = $(layoutButton).attr('data-cineNet-id');
 
-        getToken()
-            .done(function (result) {
-                accessToken = result.access_token;
-
+        updateToken()
+            .done(function () {
                 postToNetworkManager('Display/' + currentDisplayId + '/Layout/' + layoutId + '/Apply');
             });
     });
