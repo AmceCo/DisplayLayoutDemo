@@ -1,77 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>AcmeCo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css\bootstrap.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="js\bootstrap.js"></script>
-    <script src="main.js"></script>
-    <style>
-        body {
-            font: 400 15px Lato, sans-serif;
-            line-height: 1.8;
-        }
+  <meta charset="UTF-8">
+  <title>AcmeCo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css\bootstrap.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="js\bootstrap.js"></script>
+  <script src="main.js"></script>
+  <style>
+    body {
+      font: 400 15px Lato, sans-serif;
+      line-height: 1.8;
+    }
 
-        .jumbotron {
-            background-color: #BF5700;
-            color: whitesmoke;
-        }
+    .jumbotron {
+      background-color: #BF5700;
+      color: whitesmoke;
+    }
 
-        .display-dropdown, .display-dropdown:hover, .display-dropdown:active, .display-dropdown:focus {
-            background-color: #000000;
-            color: whitesmoke;
-            border: none;
-        }
+    .display-dropdown, .display-dropdown:hover, .display-dropdown:active, .display-dropdown:focus {
+      background-color: #000000;
+      color: whitesmoke;
+      border: none;
+    }
 
-        .display-dropdown-text {
-            width: 200px;
-            display: inline-block;
-            margin: auto;
-        }
+    .display-dropdown-text {
+      width: 200px;
+      display: inline-block;
+      margin: auto;
+    }
 
-        .display-selection {
-            cursor: pointer;
-        }
+    .display-selection {
+      cursor: pointer;
+    }
 
-        .display-selection-item {
+    .display-selection-item {
 
-        }
+    }
 
-        .display-selection-item:hover {
-            background-color: lightgray;
-        }
+    .display-selection-item:hover {
+      background-color: lightgray;
+    }
 
-        .layout-action-button {
-            margin: 5px;
-            background-color: black;
-            border: none;
-        }
+    .layout-action-button {
+      margin: 5px;
+      background-color: black;
+      border: none;
+    }
 
-        .layout-action-button:hover, .layout-action-button:focus, .layout-action-button:active {
-            background-color: darkgray;
-        }
-    </style>
+    .layout-action-button:hover, .layout-action-button:focus, .layout-action-button:active {
+      background-color: darkgray;
+    }
+  </style>
 </head>
 <body>
 <div class="jumbotron text-center">
-    <div class="row">
-        <h1 style="margin: auto;">AmceCo Api Demo</h1>
-        <div class="col-lg-1 col-centered" style="margin: auto;">
-            <div class="dropdown">
-                <button class="display-dropdown btn dropdown-toggle" type="button" data-toggle="dropdown">
-                    <div class="display-dropdown-text">Loading Displays . . . .</div>
-                    <span class="caret"></span></button>
-                <ul class="dropdown-menu dropdown-menu-center display-selection">
-                </ul>
-            </div>
-        </div>
+  <div class="row">
+    <h1 style="margin: auto;">AmceCo Api Demo</h1>
+    <div class="col-lg-1 col-centered" style="margin: auto;">
+      <div class="dropdown">
+        <button class="display-dropdown btn dropdown-toggle" type="button" data-toggle="dropdown">
+          <div class="display-dropdown-text">Loading Displays . . . .</div>
+          <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-center display-selection">
+        </ul>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="container display-actions">
-    <div>Loading Layouts. . .</div>
+  <div>Loading Layouts. . .</div>
+</div>
+
+<div class="container asset-actions">
+  <div>Loading Assets. . .</div>
 </div>
 </body>
 </html>
