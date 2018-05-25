@@ -263,8 +263,31 @@ function addAssetColumnToRow(row, asset) {
   }
 
   addButtonColumnToRow(row, asset.Name, asset.AssetId, function () {
-    alert(asset.Name + ' is a/an ' + asset.AssetType + ' asset!');
-
+    if (asset.AssetType === "CompositeAsset") {
+      var request = {
+        X: 0,
+        Y: 0,
+        Width: 500,
+        Height: 500,
+        AssetType: "CompositeAsset",
+        AssetId: asset.AssetId,
+        AssetData: {
+          BackColor: asset.BackColor,
+          DesignWidth: asset.DesignWidth,
+          DesignHeight: asset.DesignHeight,
+          Name: asset.Name,
+          ImageElements: asset.ImageElements,
+          InputCaptureElements: asset.InputCaptureElements,
+          TextElements: asset.TextElements,
+          IpxElements: asset.IpxCaptureElements,
+          VideoElements: asset.VideoCaptureElements,
+          OpeningEffect: asset.OpeningEffect,
+          ClosingEffect: asset.ClosingEffect
+        }
+      };
+      postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+    }
+    else alert(asset.Name + ' is a/an ' + asset.AssetType + ' asset!');
   });
 }
 
