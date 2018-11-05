@@ -226,6 +226,10 @@ function loadActions() {
 
     var row = $('<div>');
 
+    row.attr('class', 'row');
+
+    container.append(row);
+
     addButtonColumnToRow(row, 'Create IP Stream Asset', null, function () {
         updateToken()
             .done(function () {
