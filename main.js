@@ -1,6 +1,6 @@
 var username = 'admin';
 var password = 'cinemassive';
-var networkManagerUrl = 'http://localhost:25002/CineNet/NetworkManager/';
+var networkManagerUrl = 'http://voyager:25002/CineNet/NetworkManager/';
 var accessToken = null;
 var refreshToken = null;
 var currentDisplayId = null;
@@ -171,6 +171,8 @@ function displayClick(linkElement) {
     loadLayouts();
 
     loadAssets();
+
+    loadActions();
 }
 
 function loadLayouts() {
@@ -203,7 +205,7 @@ function loadLayouts() {
                 addLayoutColumnToRow(row, layouts[currentIndex++]);
             }
 
-            addButtonColumnToRow(row, 'Clear Layout', null, function (clearButton) {
+            addButtonColumnToRow(row, 'Clear Layout', null, function () {
                 updateToken()
                     .done(function () {
                         var request = {
@@ -215,6 +217,26 @@ function loadLayouts() {
                     });
             });
         });
+}
+
+function loadActions() {
+    var container = $('.actions');
+
+    container.empty();
+
+    var row = $('<div>');
+
+    addButtonColumnToRow(row, 'Create IP Stream Asset', null, function () {
+        updateToken()
+            .done(function () {
+                var request = {
+                    Name: "Test IP Stream Asset",
+                    IpAddress: "https://youtu.be/BCs-llw8EU4"
+                };
+
+                postToNetworkManager('AssetManager/IpStream', request);
+            });
+    });
 }
 
 function loadAssets() {
