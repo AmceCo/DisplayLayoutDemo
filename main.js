@@ -179,7 +179,7 @@ function loadLayouts() {
 
             console.log("Layouts JSON returned: " + JSON.stringify(layouts));
 
-            var container = $('.display-actions');
+            var container = $('.displays');
 
             container.empty();
 
@@ -203,7 +203,7 @@ function loadLayouts() {
                 addLayoutColumnToRow(row, layouts[currentIndex++]);
             }
 
-            addButtonColumnToRow(row, 'Clear', null, function (clearButton) {
+            addButtonColumnToRow(row, 'Clear Layout', null, function (clearButton) {
                 updateToken()
                     .done(function () {
                         var request = {
@@ -223,7 +223,7 @@ function loadAssets() {
 
             console.log("Assets JSON returned: " + JSON.stringify(assets));
 
-            var container = $('.asset-actions');
+            var container = $('.assets');
 
             container.empty();
 
