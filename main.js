@@ -226,8 +226,6 @@ function loadActions() {
 
             var wallInstance = instances.filter(i => i.InstanceType === "VideoWall")[0];
 
-            console.log("Filtered instance JSON returned: " + JSON.stringify(wallInstance));
-
             getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/NativeApplication/Clock/AllTimeZones')
                 .done(function (timezones) {
 
@@ -280,26 +278,40 @@ function addCreateClockButton(row, selectedTimezone, wallInstance) {
 
 function loadAssets() {
     getFromNetworkManager('AssetManager/Asset')
-        .done(function (assets) {
+        .done(function (newAssets) {
 
-            console.log("Assets JSON returned: " + JSON.stringify(assets));
+            console.log("Assets JSON returned from Asset Manager: " + JSON.stringify(newAssets));
 
-            var row = createContainerStructure('.assets');
+            getFromNetworkManager('Instance')
+                .done(function (instances) {
 
-            var loops = Math.ceil(assets.length / 3);
-            var currentIndex = 0;
+                    console.log("Instances JSON returned: " + JSON.stringify(instances));
 
-            for (var i = 0; i < loops; i++) {
+                    var wallInstance = instances.filter(i => i.InstanceType === "VideoWall")[0];
 
-                if (currentIndex > assets.length) {
-                    break;
-                }
+                    getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Assets')
+                        .done(function (oldAssets) {
+                            console.log("Assets JSON returned from Wall: " + JSON.stringify(oldAssets));
 
-                addAssetColumnToRow(row, assets[currentIndex++]);
-                addAssetColumnToRow(row, assets[currentIndex++]);
-                addAssetColumnToRow(row, assets[currentIndex++]);
-            }
+                            var allAssets = newAssets.concat(oldAssets);
 
+                            var row = createContainerStructure('.assets');
+
+                            var loops = Math.ceil(allAssets.length / 3);
+                            var currentIndex = 0;
+
+                            for (var i = 0; i < loops; i++) {
+
+                                if (currentIndex > allAssets.length) {
+                                    break;
+                                }
+
+                                addAssetColumnToRow(row, allAssets[currentIndex++]);
+                                addAssetColumnToRow(row, allAssets[currentIndex++]);
+                                addAssetColumnToRow(row, allAssets[currentIndex++]);
+                            }
+                        });
+                });
         });
 }
 
@@ -336,7 +348,9 @@ function addAssetColumnToRow(row, asset) {
         return;
     }
 
-    addButtonColumnToRow(row, asset.Name, asset.AssetId, function () {
+    var assetName = asset.AssetData ? asset.AssetData.Name : asset.Name;
+
+    addButtonColumnToRow(row, assetName, asset.AssetId, function () {
         if (asset.AssetType === "CompositeAsset") {
             var request = {
                 X: 0,
