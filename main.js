@@ -57,6 +57,20 @@ function loadDisplays() {
         });
 }
 
+function displayClick(linkElement) {
+    currentDisplayId = $(linkElement).attr('data-display-id');
+    workspaceId = $(linkElement).attr('data-workspace-id');
+    canvasId = $(linkElement).attr('data-canvas-id');
+
+    $(".display-dropdown-text").text($(linkElement).text());
+
+    loadLayouts();
+
+    loadAssets();
+
+    loadActions();
+}
+
 function login() {
     return getSaml()
         .then(getToken)
@@ -160,39 +174,16 @@ function postToNetworkManager(endingUrl, postData) {
     });
 }
 
-function displayClick(linkElement) {
-
-    currentDisplayId = $(linkElement).attr('data-display-id');
-    workspaceId = $(linkElement).attr('data-workspace-id');
-    canvasId = $(linkElement).attr('data-canvas-id');
-
-    $(".display-dropdown-text").text($(linkElement).text());
-
-    loadLayouts();
-
-    loadAssets();
-
-    loadActions();
-}
-
 function loadLayouts() {
     getFromNetworkManager('Display/' + currentDisplayId + '/Layout')
         .done(function (layouts) {
 
             console.log("Layouts JSON returned: " + JSON.stringify(layouts));
 
-            var container = $('.displays');
-
-            container.empty();
+            var row = createContainerStructure('.displays');
 
             var loops = Math.ceil(layouts.length / 3);
             var currentIndex = 0;
-
-            var row = $('<div>');
-
-            row.attr('class', 'row');
-
-            container.append(row);
 
             for (var i = 0; i < loops; i++) {
 
@@ -205,31 +196,51 @@ function loadLayouts() {
                 addLayoutColumnToRow(row, layouts[currentIndex++]);
             }
 
-            addButtonColumnToRow(row, 'Clear Layout', null, function () {
-                updateToken()
-                    .done(function () {
-                        var request = {
-                            WorkspaceId: workspaceId,
-                            CanvasId: canvasId
-                        };
-
-                        postToNetworkManager('Display/' + currentDisplayId + '/Window/Clear', request);
-                    });
-            });
+            addClearLayoutButton(row);
         });
 }
 
+function addClearLayoutButton(row) {
+    addButtonColumnToRow(row, 'Clear Layout', null, function () {
+        updateToken()
+            .done(function () {
+                var request = {
+                    WorkspaceId: workspaceId,
+                    CanvasId: canvasId
+                };
+
+                postToNetworkManager('Display/' + currentDisplayId + '/Window/Clear', request);
+            });
+    });
+}
+
 function loadActions() {
-    var container = $('.actions');
+    var row = createContainerStructure('.actions');
 
-    container.empty();
+    addCreateIpStreamButton(row);
 
-    var row = $('<div>');
+    getFromNetworkManager('Instance')
+        .done(function (instances) {
 
-    row.attr('class', 'row');
+            console.log("Instances JSON returned: " + JSON.stringify(instances));
 
-    container.append(row);
+            var wallInstance = instances.filter(i => i.InstanceType === "VideoWall")[0];
 
+            console.log("Filtered instance JSON returned: " + JSON.stringify(wallInstance));
+
+            getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/NativeApplication/Clock/AllTimeZones')
+                .done(function (timezones) {
+
+                    console.log("Timezones JSON returned: " + JSON.stringify(timezones));
+
+                    var selectedTimezone = timezones[5];
+
+                    addCreateClockButton(row, selectedTimezone, wallInstance);
+                });
+        });
+}
+
+function addCreateIpStreamButton(row) {
     addButtonColumnToRow(row, 'Create IP Stream Asset', null, function () {
         updateToken()
             .done(function () {
@@ -243,24 +254,40 @@ function loadActions() {
     });
 }
 
+function addCreateClockButton(row, selectedTimezone, wallInstance) {
+    addButtonColumnToRow(row, 'Create Clock Asset', null, function () {
+        updateToken()
+            .done(function () {
+                var request = {
+                    Name: "Test Clock Asset",
+                    BackgroundColor: "Red",
+                    DateFontColor: "Black",
+                    IsTimer: false,
+                    LocationFontColor: "DarkBlue",
+                    Show24HourTime: true,
+                    ShowDate: true,
+                    ShowLocation: true,
+                    ShowSeconds: true,
+                    TimeFontColor: "Yellow",
+                    TimerDuration: "0",
+                    TimeZoneId: selectedTimezone.Id
+                };
+
+                postToNetworkManager('Instance/' + wallInstance.InstanceId + '/NativeApplication/Clock', request);
+            });
+    });
+}
+
 function loadAssets() {
     getFromNetworkManager('AssetManager/Asset')
         .done(function (assets) {
 
             console.log("Assets JSON returned: " + JSON.stringify(assets));
 
-            var container = $('.assets');
-
-            container.empty();
+            var row = createContainerStructure('.assets');
 
             var loops = Math.ceil(assets.length / 3);
             var currentIndex = 0;
-
-            var row = $('<div>');
-
-            row.attr('class', 'row');
-
-            container.append(row);
 
             for (var i = 0; i < loops; i++) {
 
@@ -274,6 +301,19 @@ function loadAssets() {
             }
 
         });
+}
+
+function createContainerStructure(containerName) {
+    var container = $(containerName);
+
+    container.empty();
+
+    var row = $('<div>');
+
+    row.attr('class', 'row');
+
+    container.append(row);
+    return row;
 }
 
 function addLayoutColumnToRow(row, layout) {
