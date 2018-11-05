@@ -8,305 +8,313 @@ var workspaceId = null;
 var canvasId = null;
 
 $(document).ready(function () {
-  login()
-    .then(loadDisplays);
+    login()
+        .then(loadDisplays);
 });
 
 function loadDisplays() {
-  getFromNetworkManager('Display')
-    .done(function (result) {
+    getFromNetworkManager('Display')
+        .done(function (result) {
 
-      var displayList = $('.display-selection');
+            console.log("Display JSON returned: " + JSON.stringify(result));
 
-      if (displayList) {
+            var displayList = $('.display-selection');
 
-        var first = true;
+            if (displayList) {
 
-        result.forEach(function (display) {
-          var listItem = $('<li>');
+                var first = true;
 
-          var linkItem = $('<div>');
+                result.forEach(function (display) {
+                    var listItem = $('<li>');
 
-          linkItem.on('click', function () {
-            displayClick(this);
-          });
+                    var linkItem = $('<div>');
 
-          linkItem.attr('data-display-id', display.DisplayId);
-          linkItem.attr('data-workspace-id', display.WorkspaceId);
-          linkItem.attr('data-canvas-id', display.CanvasId);
+                    linkItem.on('click', function () {
+                        displayClick(this);
+                    });
 
-          linkItem.attr('class', 'display-selection-item');
+                    linkItem.attr('data-display-id', display.DisplayId);
+                    linkItem.attr('data-workspace-id', display.WorkspaceId);
+                    linkItem.attr('data-canvas-id', display.CanvasId);
 
-          linkItem.text(display.Name);
+                    linkItem.attr('class', 'display-selection-item');
 
-          listItem.append(linkItem);
+                    linkItem.text(display.Name);
 
-          displayList.append((listItem));
+                    listItem.append(linkItem);
 
-          if (first) {
-            displayClick(linkItem);
-            first = false;
-          }
+                    displayList.append((listItem));
+
+                    if (first) {
+                        displayClick(linkItem);
+                        first = false;
+                    }
+                });
+            }
+        })
+        .fail(function (result) {
+            alert('ERROR: ' + result.responseText);
         });
-      }
-    })
-    .fail(function (result) {
-      alert('ERROR: ' + result.responseText);
-    });
 }
 
 function login() {
-  return getSaml()
-    .then(getToken)
-    .then(function (response) {
-      accessToken = response.access_token;
-      refreshToken = response.refresh_token;
-    })
-    .catch(function (result) {
-      alert('ERROR: ' + result.responseText);
-    })
+    return getSaml()
+        .then(getToken)
+        .then(function (response) {
+            accessToken = response.access_token;
+            refreshToken = response.refresh_token;
+        })
+        .catch(function (result) {
+            alert('ERROR: ' + result.responseText);
+        })
 }
 
 function getSaml() {
-  var body = {
-    Username: username,
-    Password: password
-  };
+    var body = {
+        Username: username,
+        Password: password
+    };
 
-  return $.ajax({
-    type: "POST",
-    url: networkManagerUrl + 'IdentityProvider/Login',
-    contentType: 'application/json; charset=utf-8',
-    data: JSON.stringify(body)
-  });
+    return $.ajax({
+        type: "POST",
+        url: networkManagerUrl + 'IdentityProvider/Login',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(body)
+    });
 }
 
 
 function getToken(samlResponse) {
-  var body = {
-    grant_type: "saml20",
-    assertion: btoa(samlResponse)
-  };
+    var body = {
+        grant_type: "saml20",
+        assertion: btoa(samlResponse)
+    };
 
-  return $.ajax({
-    type: "POST",
-    url: networkManagerUrl + 'Authorization/Token',
-    dataType: 'json',
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: body
-  });
-}
-
-function updateToken() {
-  var body = {
-    grant_type: "refresh_token",
-    refresh_token: refreshToken
-  };
-
-  return $.ajax({
-    type: "POST",
-    url: networkManagerUrl + 'Authorization/Token',
-    dataType: 'json',
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: body
-  })
-    .catch(function (result) {
-      alert('ERROR: ' + result.responseText);
-    })
-    .then(function (result) {
-      accessToken = result.access_token;
-      refreshToken = result.refresh_token;
+    return $.ajax({
+        type: "POST",
+        url: networkManagerUrl + 'Authorization/Token',
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: body
     });
 }
 
-function getFromNetworkManager(endingUrl) {
-  console.log(networkManagerUrl + endingUrl);
+function updateToken() {
+    var body = {
+        grant_type: "refresh_token",
+        refresh_token: refreshToken
+    };
 
-  return $.ajax({
-    type: "GET",
-    url: networkManagerUrl + endingUrl,
-    dataType: 'json',
-    contentType: 'application/json; charset=UTF-8',
-    headers: {
-      'Authorization': 'Bearer ' + accessToken
-    }
-  }).catch(function (result) {
-    alert('ERROR: ' + result.responseText);
-  });
+    return $.ajax({
+        type: "POST",
+        url: networkManagerUrl + 'Authorization/Token',
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: body
+    })
+        .catch(function (result) {
+            alert('ERROR: ' + result.responseText);
+        })
+        .then(function (result) {
+            accessToken = result.access_token;
+            refreshToken = result.refresh_token;
+        });
+}
+
+function getFromNetworkManager(endingUrl) {
+    console.log("GET: " + networkManagerUrl + endingUrl);
+
+    return $.ajax({
+        type: "GET",
+        url: networkManagerUrl + endingUrl,
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        }
+    }).catch(function (result) {
+        alert('ERROR: ' + result.responseText);
+    });
 }
 
 function postToNetworkManager(endingUrl, postData) {
-  console.log(networkManagerUrl + endingUrl);
+    console.log("POST: " + networkManagerUrl + endingUrl);
 
-  var json = null;
+    var jsonSent = null;
 
-  if (postData) {
-    json = JSON.stringify(postData);
-  }
+    if (postData) {
+        jsonSent = JSON.stringify(postData);
 
-  return $.ajax({
-    type: "POST",
-    url: networkManagerUrl + endingUrl,
-    dataType: 'json',
-    contentType: 'application/json; charset=UTF-8',
-    data: json,
-    headers: {
-      'Authorization': 'Bearer ' + accessToken
+        console.log("JSON postdata sent: " + jsonSent);
     }
-  });
+
+    return $.ajax({
+        type: "POST",
+        url: networkManagerUrl + endingUrl,
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        data: jsonSent,
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        }
+    });
 }
 
 function displayClick(linkElement) {
 
-  currentDisplayId = $(linkElement).attr('data-display-id');
-  workspaceId = $(linkElement).attr('data-workspace-id');
-  canvasId = $(linkElement).attr('data-canvas-id');
+    currentDisplayId = $(linkElement).attr('data-display-id');
+    workspaceId = $(linkElement).attr('data-workspace-id');
+    canvasId = $(linkElement).attr('data-canvas-id');
 
-  $(".display-dropdown-text").text($(linkElement).text());
+    $(".display-dropdown-text").text($(linkElement).text());
 
-  loadLayouts();
+    loadLayouts();
 
-  loadAssets();
+    loadAssets();
 }
 
 function loadLayouts() {
-  getFromNetworkManager('Display/' + currentDisplayId + '/Layout')
-    .done(function (layouts) {
+    getFromNetworkManager('Display/' + currentDisplayId + '/Layout')
+        .done(function (layouts) {
 
-      var container = $('.display-actions');
+            console.log("Layouts JSON returned: " + JSON.stringify(layouts));
 
-      container.empty();
+            var container = $('.display-actions');
 
-      var loops = Math.ceil(layouts.length / 3);
-      var currentIndex = 0;
+            container.empty();
 
-      var row = $('<div>');
+            var loops = Math.ceil(layouts.length / 3);
+            var currentIndex = 0;
 
-      row.attr('class', 'row');
+            var row = $('<div>');
 
-      container.append(row);
+            row.attr('class', 'row');
 
-      for (var i = 0; i < loops; i++) {
+            container.append(row);
 
-        if (currentIndex > layouts.length) {
-          break;
-        }
+            for (var i = 0; i < loops; i++) {
 
-        addLayoutColumnToRow(row, layouts[currentIndex++]);
-        addLayoutColumnToRow(row, layouts[currentIndex++]);
-        addLayoutColumnToRow(row, layouts[currentIndex++]);
-      }
+                if (currentIndex > layouts.length) {
+                    break;
+                }
 
-      addButtonColumnToRow(row, 'Clear', null, function (clearButton) {
-        updateToken()
-          .done(function () {
-            var request = {
-              WorkspaceId: workspaceId,
-              CanvasId: canvasId
-            };
+                addLayoutColumnToRow(row, layouts[currentIndex++]);
+                addLayoutColumnToRow(row, layouts[currentIndex++]);
+                addLayoutColumnToRow(row, layouts[currentIndex++]);
+            }
 
-            postToNetworkManager('Display/' + currentDisplayId + '/Window/Clear', request);
-          });
-      });
-    });
+            addButtonColumnToRow(row, 'Clear', null, function (clearButton) {
+                updateToken()
+                    .done(function () {
+                        var request = {
+                            WorkspaceId: workspaceId,
+                            CanvasId: canvasId
+                        };
+
+                        postToNetworkManager('Display/' + currentDisplayId + '/Window/Clear', request);
+                    });
+            });
+        });
 }
 
 function loadAssets() {
-  getFromNetworkManager('AssetManager/Asset')
-    .done(function (assets) {
+    getFromNetworkManager('AssetManager/Asset')
+        .done(function (assets) {
 
-      var container = $('.asset-actions');
+            console.log("Assets JSON returned: " + JSON.stringify(assets));
 
-      container.empty();
+            var container = $('.asset-actions');
 
-      var loops = Math.ceil(assets.length / 3);
-      var currentIndex = 0;
+            container.empty();
 
-      var row = $('<div>');
+            var loops = Math.ceil(assets.length / 3);
+            var currentIndex = 0;
 
-      row.attr('class', 'row');
+            var row = $('<div>');
 
-      container.append(row);
+            row.attr('class', 'row');
 
-      for (var i = 0; i < loops; i++) {
+            container.append(row);
 
-        if (currentIndex > assets.length) {
-          break;
-        }
+            for (var i = 0; i < loops; i++) {
 
-        addAssetColumnToRow(row, assets[currentIndex++]);
-        addAssetColumnToRow(row, assets[currentIndex++]);
-        addAssetColumnToRow(row, assets[currentIndex++]);
-      }
+                if (currentIndex > assets.length) {
+                    break;
+                }
 
-    });
+                addAssetColumnToRow(row, assets[currentIndex++]);
+                addAssetColumnToRow(row, assets[currentIndex++]);
+                addAssetColumnToRow(row, assets[currentIndex++]);
+            }
+
+        });
 }
 
 function addLayoutColumnToRow(row, layout) {
-  if (!layout) {
-    return;
-  }
+    if (!layout) {
+        return;
+    }
 
-  addButtonColumnToRow(row, layout.Name, layout.LayoutId, function (layoutButton) {
-    var layoutId = $(layoutButton).attr('data-cineNet-id');
+    addButtonColumnToRow(row, layout.Name, layout.LayoutId, function (layoutButton) {
+        var layoutId = $(layoutButton).attr('data-cineNet-id');
 
-    updateToken()
-      .done(function () {
-        postToNetworkManager('Display/' + currentDisplayId + '/Layout/' + layoutId + '/Apply');
-      });
-  });
+        updateToken()
+            .done(function () {
+                postToNetworkManager('Display/' + currentDisplayId + '/Layout/' + layoutId + '/Apply');
+            });
+    });
 }
 
 function addAssetColumnToRow(row, asset) {
-  if (!asset) {
-    return;
-  }
-
-  addButtonColumnToRow(row, asset.Name, asset.AssetId, function () {
-    if (asset.AssetType === "CompositeAsset") {
-      var request = {
-        X: 0,
-        Y: 0,
-        Width: 500,
-        Height: 500,
-        AssetType: "CompositeAsset",
-        AssetId: asset.AssetId,
-        AssetData: {
-          BackColor: asset.BackColor,
-          DesignWidth: asset.DesignWidth,
-          DesignHeight: asset.DesignHeight,
-          Name: asset.Name,
-          ImageElements: asset.ImageElements,
-          InputCaptureElements: asset.InputCaptureElements,
-          TextElements: asset.TextElements,
-          IpxElements: asset.IpxCaptureElements,
-          VideoElements: asset.VideoCaptureElements,
-          OpeningEffect: asset.OpeningEffect,
-          ClosingEffect: asset.ClosingEffect
-        }
-      };
-      postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+    if (!asset) {
+        return;
     }
-    else alert(asset.Name + ' is a/an ' + asset.AssetType + ' asset!');
-  });
+
+    addButtonColumnToRow(row, asset.Name, asset.AssetId, function () {
+        if (asset.AssetType === "CompositeAsset") {
+            var request = {
+                X: 0,
+                Y: 0,
+                Width: 500,
+                Height: 500,
+                AssetType: "CompositeAsset",
+                AssetId: asset.AssetId,
+                AssetData: {
+                    BackColor: asset.BackColor,
+                    DesignWidth: asset.DesignWidth,
+                    DesignHeight: asset.DesignHeight,
+                    Name: asset.Name,
+                    ImageElements: asset.ImageElements,
+                    InputCaptureElements: asset.InputCaptureElements,
+                    TextElements: asset.TextElements,
+                    IpxElements: asset.IpxCaptureElements,
+                    VideoElements: asset.VideoCaptureElements,
+                    OpeningEffect: asset.OpeningEffect,
+                    ClosingEffect: asset.ClosingEffect
+                }
+            };
+            postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+        }
+        else alert(asset.Name + ' is a/an ' + asset.AssetType + ' asset!');
+    });
 }
 
 function addButtonColumnToRow(row, text, dataId, clickFunction) {
-  var column = $('<div>');
-  column.attr('class', 'col-sm-4');
+    var column = $('<div>');
+    column.attr('class', 'col-sm-4');
 
-  var button = $('<button>');
+    var button = $('<button>');
 
-  button.attr('class', 'btn-primary layout-action-button btn-block');
-  button.attr('data-cineNet-id', dataId);
+    button.attr('class', 'btn-primary layout-action-button btn-block');
+    button.attr('data-cineNet-id', dataId);
 
-  button.on('click', function () {
-    clickFunction(this);
-  });
+    button.on('click', function () {
+        clickFunction(this);
+    });
 
-  button.text(text);
+    button.text(text);
 
-  column.append(button);
+    column.append(button);
 
-  row.append(column);
+    row.append(column);
 }
