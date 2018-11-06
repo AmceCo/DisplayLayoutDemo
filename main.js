@@ -253,14 +253,11 @@ function loadActions() {
                     .done(function () {
                         getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Wall')
                             .done(function (wallInfo) {
-                                var wallInfoRow = createContainerStructure('.wallInfo');
+                                var wallInfoElement = document.getElementsByClassName("wallInfo")[0];
 
-                                var column = $('<div>');
-                                column.attr('class', 'col-sm-4');
-
-                                wallInfoRow.append(JSON.stringify(wallInfo));
-
-                                column.append(wallInfoRow)
+                                wallInfoElement.innerHTML = "Dimensions (H x V): " + wallInfo.HorizontalResolution + " x " + wallInfo.VerticalResolution
+                                    + "<br />" + "Horizontal Panels: " + wallInfo.HorizontalPanels
+                                    + "<br />" + "Vertical Panels: " + wallInfo.VerticalPanels;
                             });
                     });
             });
