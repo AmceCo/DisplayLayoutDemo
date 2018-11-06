@@ -53,7 +53,9 @@ function loadDisplays() {
             }
         })
         .fail(function (result) {
-            alert('ERROR: ' + result.responseText);
+            if (result.status !== 200) {
+                alert('ERROR: ' + result.statusText + ' | ' + result.responseText);
+            }
         });
 }
 
@@ -79,7 +81,9 @@ function login() {
             refreshToken = response.refresh_token;
         })
         .catch(function (result) {
-            alert('ERROR: ' + result.responseText);
+            if (result.status !== 200) {
+                alert('ERROR: ' + result.statusText + ' | ' + result.responseText);
+            }
         })
 }
 
@@ -127,7 +131,9 @@ function updateToken() {
         data: body
     })
         .catch(function (result) {
-            alert('ERROR: ' + result.responseText);
+            if (result.status !== 200) {
+                alert('ERROR: ' + result.statusText + ' | ' + result.responseText);
+            }
         })
         .then(function (result) {
             accessToken = result.access_token;
@@ -147,7 +153,9 @@ function getFromNetworkManager(endingUrl) {
             'Authorization': 'Bearer ' + accessToken
         }
     }).catch(function (result) {
-        alert('ERROR: ' + result.responseText);
+        if (result.status !== 200) {
+            alert('ERROR: ' + result.statusText + ' | ' + result.responseText);
+        }
     });
 }
 
@@ -172,7 +180,9 @@ function postToNetworkManager(endingUrl, postData) {
             'Authorization': 'Bearer ' + accessToken
         }
     }).catch(function (result) {
-        alert('ERROR: ' + result.responseText);
+        if (result.status !== 200) {
+            alert('ERROR: ' + result.statusText + ' | ' + result.responseText);
+        }
     });
 }
 
@@ -216,27 +226,6 @@ function addClearLayoutButton(row) {
     });
 }
 
-function addCreateIpStreamWindowButton(row, chosenIpStreamAsset) {
-    addButtonColumnToRow(row, 'Create IP Stream Asset Window', null, function () {
-        updateToken()
-            .done(function () {
-                var request = {
-                    AssetData: {IpAddress: chosenIpStreamAsset.IpAddress},
-                    AssetId: chosenIpStreamAsset.AssetId,
-                    AssetType: "IpStream",
-                    CanvasId: canvasId,
-                    WorkspaceId: workspaceId,
-                    Height: 500,
-                    Width: 500,
-                    X: 0,
-                    Y: 0
-                };
-
-                postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
-            });
-    });
-}
-
 function loadActions() {
     var row = createContainerStructure('.actions');
 
@@ -259,56 +248,6 @@ function loadActions() {
                     addCreateClockButton(row, selectedTimezone, wallInstance);
                 });
 
-            getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Assets')
-                .done(function (oldAssets) {
-                    console.log("Assets JSON returned from Wall: " + JSON.stringify(oldAssets));
-
-                    let clockAssets = oldAssets.filter(i => i.AssetType === "NativeApplication" && i.AssetData.NativeApplicationType === 6);
-
-                    var numberOfClockAssets = clockAssets.length;
-
-                    if (numberOfClockAssets > 0) {
-
-                        var chosenClockAsset = clockAssets[getRandomNumber(numberOfClockAssets)];
-
-                        console.log("Chosen clock: " + JSON.stringify(chosenClockAsset));
-
-                        addButtonColumnToRow(row, 'Create Clock Asset Window', null, function () {
-                            updateToken()
-                                .done(function () {
-                                    var request = {
-                                        AssetId: chosenClockAsset.AssetId,
-                                        AssetType: "NativeApplication",
-                                        CanvasId: canvasId,
-                                        WorkspaceId: workspaceId,
-                                        Height: 500,
-                                        Width: 500,
-                                        X: 0,
-                                        Y: 0
-                                    };
-
-                                    postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
-                                });
-                        });
-                    }
-                });
-        });
-
-    getFromNetworkManager('AssetManager/Asset')
-        .done(function (newAssets) {
-
-            console.log("Assets JSON returned from Asset Manager: " + JSON.stringify(newAssets));
-
-            let ipStreamAssets = newAssets.filter(i => i.AssetType === "IpStream");
-
-            var numberOfIpStreamAssets = ipStreamAssets.length;
-
-            if (numberOfIpStreamAssets > 0) {
-
-                var chosenIpStreamAsset = ipStreamAssets[getRandomNumber(numberOfIpStreamAssets)];
-
-                addCreateIpStreamWindowButton(row, chosenIpStreamAsset);
-            }
         });
 }
 
@@ -430,31 +369,72 @@ function addAssetColumnToRow(row, asset) {
 
     addButtonColumnToRow(row, assetName, asset.AssetId, function () {
         if (asset.AssetType === "CompositeAsset") {
-            var request = {
-                X: 0,
-                Y: 0,
-                Width: 500,
-                Height: 500,
-                AssetType: "CompositeAsset",
-                AssetId: asset.AssetId,
-                AssetData: {
-                    BackColor: asset.BackColor,
-                    DesignWidth: asset.DesignWidth,
-                    DesignHeight: asset.DesignHeight,
-                    Name: asset.Name,
-                    ImageElements: asset.ImageElements,
-                    InputCaptureElements: asset.InputCaptureElements,
-                    TextElements: asset.TextElements,
-                    IpxElements: asset.IpxCaptureElements,
-                    VideoElements: asset.VideoCaptureElements,
-                    OpeningEffect: asset.OpeningEffect,
-                    ClosingEffect: asset.ClosingEffect
-                }
-            };
-            postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+            createCompositeAssetWindow(asset);
         }
-        else alert(asset.Name + ' is a/an ' + asset.AssetType + ' asset!');
+        else if (asset.AssetType === "NativeApplication") {
+            createClockWindow(asset);
+        }
+        else if (asset.AssetType === "IpStream") {
+            createIpStreamWindow(asset);
+        }
+        else alert(assetName + ' is a/an ' + asset.AssetType + ' asset!');
     });
+}
+
+function createIpStreamWindow(asset) {
+    var request = {
+        AssetData: {IpAddress: asset.IpAddress},
+        AssetId: asset.AssetId,
+        AssetType: asset.AssetType,
+        CanvasId: canvasId,
+        WorkspaceId: workspaceId,
+        Height: 500,
+        Width: 500,
+        X: 0,
+        Y: 0
+    };
+
+    postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+}
+
+function createClockWindow(asset) {
+    var request = {
+        AssetId: asset.AssetId,
+        AssetType: asset.AssetType,
+        CanvasId: canvasId,
+        WorkspaceId: workspaceId,
+        Height: 500,
+        Width: 500,
+        X: 0,
+        Y: 0
+    };
+
+    postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+}
+
+function createCompositeAssetWindow(asset) {
+    var request = {
+        X: 0,
+        Y: 0,
+        Width: 500,
+        Height: 500,
+        AssetType: "CompositeAsset",
+        AssetId: asset.AssetId,
+        AssetData: {
+            BackColor: asset.BackColor,
+            DesignWidth: asset.DesignWidth,
+            DesignHeight: asset.DesignHeight,
+            Name: asset.Name,
+            ImageElements: asset.ImageElements,
+            InputCaptureElements: asset.InputCaptureElements,
+            TextElements: asset.TextElements,
+            IpxElements: asset.IpxCaptureElements,
+            VideoElements: asset.VideoCaptureElements,
+            OpeningEffect: asset.OpeningEffect,
+            ClosingEffect: asset.ClosingEffect
+        }
+    };
+    postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
 }
 
 function addButtonColumnToRow(row, text, dataId, clickFunction) {
