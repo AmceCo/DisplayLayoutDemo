@@ -74,6 +74,8 @@ function displayClick(linkElement) {
 
     loadWallInfo();
 
+    loadWindowInfo();
+
 }
 
 function login() {
@@ -245,6 +247,27 @@ function loadWallInfo() {
                         + "<br />" + "Horizontal Panels: " + wallInfo.HorizontalPanels
                         + "<br />" + "Vertical Panels: " + wallInfo.VerticalPanels;
                 });
+        });
+}
+
+function loadWindowInfo() {
+    getFromNetworkManager('Display/' + currentDisplayId + '/Window')
+        .done(function (windowInfo) {
+            console.log("Windows Info: " + JSON.stringify(windowInfo));
+            var windowInfoElement = document.getElementsByClassName("windowInfo")[0];
+
+            windowInfoElement.innerHTML = "";
+
+            for (var i = 0; i < windowInfo.length; i++) {
+                console.log("WindowInfo: " + JSON.stringify(windowInfo[i]));
+
+                windowInfoElement.innerHTML += "AssetName: " + windowInfo[i].AssetName + "<br />" +
+                    "Height: " + windowInfo[i].Height + "<br />" +
+                    "Width: " + windowInfo[i].Width + "<br />" +
+                    "X: " + windowInfo[i].X + "<br />" +
+                    "Y: " + windowInfo[i].Y + "<br />" +
+                    "WindowType: " + windowInfo[i].WindowType + "<br />" + "<hr>";
+            }
         });
 }
 
