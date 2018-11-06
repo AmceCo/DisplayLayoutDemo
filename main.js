@@ -74,8 +74,6 @@ function displayClick(linkElement) {
 
     loadWallInfo();
 
-    loadWindowInfo();
-
 }
 
 function login() {
@@ -250,27 +248,6 @@ function loadWallInfo() {
         });
 }
 
-function loadWindowInfo() {
-    getFromNetworkManager('Display/' + currentDisplayId + '/Window')
-        .done(function (windowInfo) {
-            console.log("Windows Info: " + JSON.stringify(windowInfo));
-            var windowInfoElement = document.getElementsByClassName("windowInfo")[0];
-
-            windowInfoElement.innerHTML = "";
-
-            for (var i = 0; i < windowInfo.length; i++) {
-                console.log("WindowInfo: " + JSON.stringify(windowInfo[i]));
-
-                windowInfoElement.innerHTML += "AssetName: " + windowInfo[i].AssetName + "<br />" +
-                    "Height: " + windowInfo[i].Height + "<br />" +
-                    "Width: " + windowInfo[i].Width + "<br />" +
-                    "X: " + windowInfo[i].X + "<br />" +
-                    "Y: " + windowInfo[i].Y + "<br />" +
-                    "WindowType: " + windowInfo[i].WindowType + "<br />" + "<hr>";
-            }
-        });
-}
-
 function loadActions() {
     var row = createContainerStructure('.actions');
 
@@ -294,6 +271,7 @@ function loadActions() {
                 });
         });
 
+    addGetWindowInfoButton(row);
 }
 
 function addCreateIpStreamButton(row) {
@@ -330,6 +308,30 @@ function addCreateClockButton(row, selectedTimezone, wallInstance) {
                 };
 
                 postToNetworkManager('Instance/' + wallInstance.InstanceId + '/NativeApplication/Clock', request);
+            });
+    });
+}
+
+function addGetWindowInfoButton(row) {
+    addButtonColumnToRow(row, 'Get Info for Windows', null, function () {
+        updateToken()
+            .done(function () {
+                getFromNetworkManager('Display/' + currentDisplayId + '/Window')
+                    .done(function (windowInfo) {
+                        var windowInfoElement = document.getElementsByClassName("windowInfo")[0];
+
+                        windowInfoElement.innerHTML = "";
+
+                        for (var i = 0; i < windowInfo.length; i++) {
+
+                            windowInfoElement.innerHTML += "AssetName: " + windowInfo[i].AssetName + "<br />" +
+                                "Height: " + windowInfo[i].Height + "<br />" +
+                                "Width: " + windowInfo[i].Width + "<br />" +
+                                "X: " + windowInfo[i].X + "<br />" +
+                                "Y: " + windowInfo[i].Y + "<br />" +
+                                "WindowType: " + windowInfo[i].WindowType + "<br />" + "<hr>";
+                        }
+                    });
             });
     });
 }
@@ -430,74 +432,86 @@ function addAssetColumnToRow(row, asset) {
 }
 
 function createInputWindow(asset) {
-    var request = {
-        AssetId: asset.AssetId,
-        AssetType: asset.AssetType,
-        CanvasId: canvasId,
-        WorkspaceId: workspaceId,
-        Height: 500,
-        Width: 500,
-        X: 0,
-        Y: 0
-    };
+    updateToken()
+        .done(function () {
+            var request = {
+                AssetId: asset.AssetId,
+                AssetType: asset.AssetType,
+                CanvasId: canvasId,
+                WorkspaceId: workspaceId,
+                Height: 500,
+                Width: 500,
+                X: 0,
+                Y: 0
+            };
 
-    postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+            postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+        });
 }
 
 function createIpStreamWindow(asset) {
-    var request = {
-        AssetData: {IpAddress: asset.IpAddress},
-        AssetId: asset.AssetId,
-        AssetType: asset.AssetType,
-        CanvasId: canvasId,
-        WorkspaceId: workspaceId,
-        Height: 500,
-        Width: 500,
-        X: 50,
-        Y: 50
-    };
+    updateToken()
+        .done(function () {
+            var request = {
+                AssetData: {IpAddress: asset.IpAddress},
+                AssetId: asset.AssetId,
+                AssetType: asset.AssetType,
+                CanvasId: canvasId,
+                WorkspaceId: workspaceId,
+                Height: 500,
+                Width: 500,
+                X: 50,
+                Y: 50
+            };
 
-    postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+            postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+        });
 }
 
 function createClockWindow(asset) {
-    var request = {
-        AssetId: asset.AssetId,
-        AssetType: asset.AssetType,
-        CanvasId: canvasId,
-        WorkspaceId: workspaceId,
-        Height: 500,
-        Width: 500,
-        X: 100,
-        Y: 100
-    };
+    updateToken()
+        .done(function () {
+            var request = {
+                AssetId: asset.AssetId,
+                AssetType: asset.AssetType,
+                CanvasId: canvasId,
+                WorkspaceId: workspaceId,
+                Height: 500,
+                Width: 500,
+                X: 100,
+                Y: 100
+            };
 
-    postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+            postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+        });
 }
 
 function createCompositeAssetWindow(asset) {
-    var request = {
-        X: 0,
-        Y: 0,
-        Width: 500,
-        Height: 500,
-        AssetType: "CompositeAsset",
-        AssetId: asset.AssetId,
-        AssetData: {
-            BackColor: asset.BackColor,
-            DesignWidth: asset.DesignWidth,
-            DesignHeight: asset.DesignHeight,
-            Name: asset.Name,
-            ImageElements: asset.ImageElements,
-            InputCaptureElements: asset.InputCaptureElements,
-            TextElements: asset.TextElements,
-            IpxElements: asset.IpxCaptureElements,
-            VideoElements: asset.VideoCaptureElements,
-            OpeningEffect: asset.OpeningEffect,
-            ClosingEffect: asset.ClosingEffect
-        }
-    };
-    postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+    updateToken()
+        .done(function () {
+            var request = {
+                X: 0,
+                Y: 0,
+                Width: 500,
+                Height: 500,
+                AssetType: "CompositeAsset",
+                AssetId: asset.AssetId,
+                AssetData: {
+                    BackColor: asset.BackColor,
+                    DesignWidth: asset.DesignWidth,
+                    DesignHeight: asset.DesignHeight,
+                    Name: asset.Name,
+                    ImageElements: asset.ImageElements,
+                    InputCaptureElements: asset.InputCaptureElements,
+                    TextElements: asset.TextElements,
+                    IpxElements: asset.IpxCaptureElements,
+                    VideoElements: asset.VideoCaptureElements,
+                    OpeningEffect: asset.OpeningEffect,
+                    ClosingEffect: asset.ClosingEffect
+                }
+            };
+            postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+        });
 }
 
 function addButtonColumnToRow(row, text, dataId, clickFunction) {
