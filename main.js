@@ -213,7 +213,7 @@ function loadLayouts() {
 }
 
 function addClearLayoutButton(row) {
-    addButtonColumnToRow(row, 'Clear Layout', null, function () {
+    addButtonColumnToRow(row, 'Clear Wall', null, function () {
         updateToken()
             .done(function () {
                 var request = {
@@ -377,13 +377,15 @@ function addAssetColumnToRow(row, asset) {
         else if (asset.AssetType === "IpStream") {
             createIpStreamWindow(asset);
         }
+        else if (asset.AssetType === "Input") {
+            createInputWindow(asset);
+        }
         else alert(assetName + ' is a/an ' + asset.AssetType + ' asset!');
     });
 }
 
-function createIpStreamWindow(asset) {
+function createInputWindow(asset) {
     var request = {
-        AssetData: {IpAddress: asset.IpAddress},
         AssetId: asset.AssetId,
         AssetType: asset.AssetType,
         CanvasId: canvasId,
@@ -397,6 +399,22 @@ function createIpStreamWindow(asset) {
     postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
 }
 
+function createIpStreamWindow(asset) {
+    var request = {
+        AssetData: {IpAddress: asset.IpAddress},
+        AssetId: asset.AssetId,
+        AssetType: asset.AssetType,
+        CanvasId: canvasId,
+        WorkspaceId: workspaceId,
+        Height: 500,
+        Width: 500,
+        X: 50,
+        Y: 50
+    };
+
+    postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+}
+
 function createClockWindow(asset) {
     var request = {
         AssetId: asset.AssetId,
@@ -405,8 +423,8 @@ function createClockWindow(asset) {
         WorkspaceId: workspaceId,
         Height: 500,
         Width: 500,
-        X: 0,
-        Y: 0
+        X: 100,
+        Y: 100
     };
 
     postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
