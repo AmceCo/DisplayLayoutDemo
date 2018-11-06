@@ -30,7 +30,7 @@ function loadDisplays() {
                     var linkItem = $('<div>');
 
                     linkItem.on('click', function () {
-                        displayClick(this);
+                        displayClick(linkItem);
                     });
 
                     linkItem.attr('data-display-id', display.DisplayId);
@@ -171,6 +171,8 @@ function postToNetworkManager(endingUrl, postData) {
         headers: {
             'Authorization': 'Bearer ' + accessToken
         }
+    }).catch(function (result) {
+        alert('ERROR: ' + result.responseText);
     });
 }
 
@@ -214,7 +216,7 @@ function addClearLayoutButton(row) {
     });
 }
 
-function addCreateIpStreamWindowButto(row, chosenIpStreamAsset) {
+function addCreateIpStreamWindowButton(row, chosenIpStreamAsset) {
     addButtonColumnToRow(row, 'Create IP Stream Asset Window', null, function () {
         updateToken()
             .done(function () {
@@ -257,35 +259,56 @@ function loadActions() {
                     addCreateClockButton(row, selectedTimezone, wallInstance);
                 });
 
-            getFromNetworkManager('AssetManager/Asset')
-                .done(function (newAssets) {
-
-                    console.log("Assets JSON returned from Asset Manager: " + JSON.stringify(newAssets));
-
-                    let ipStreamAssets = newAssets.filter(i => i.AssetType === "IpStream");
-
-                    var numberOfIpStreamAssets = ipStreamAssets.count;
-
-                    if (numberOfIpStreamAssets >= 0) {
-
-                        var chosenIpStreamAsset = ipStreamAssets[getRandomNumber(numberOfIpStreamAssets)];
-
-                        addCreateIpStreamWindowButto(row, chosenIpStreamAsset);
-                    }
-                });
-
             getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Assets')
                 .done(function (oldAssets) {
                     console.log("Assets JSON returned from Wall: " + JSON.stringify(oldAssets));
 
                     let clockAssets = oldAssets.filter(i => i.AssetType === "NativeApplication" && i.AssetData.NativeApplicationType === 6);
 
-                    var numberOfClockAssets = clockAssets.count;
+                    var numberOfClockAssets = clockAssets.length;
 
-                    var chosenClockAsset = clockAssets[getRandomNumber(numberOfClockAssets)];
+                    if (numberOfClockAssets > 0) {
 
-                    console.log("Chosen clock: " + JSON.stringify(chosenClockAsset));
+                        var chosenClockAsset = clockAssets[getRandomNumber(numberOfClockAssets)];
+
+                        console.log("Chosen clock: " + JSON.stringify(chosenClockAsset));
+
+                        addButtonColumnToRow(row, 'Create Clock Asset Window', null, function () {
+                            updateToken()
+                                .done(function () {
+                                    var request = {
+                                        AssetId: chosenClockAsset.AssetId,
+                                        AssetType: "NativeApplication",
+                                        CanvasId: canvasId,
+                                        WorkspaceId: workspaceId,
+                                        Height: 500,
+                                        Width: 500,
+                                        X: 0,
+                                        Y: 0
+                                    };
+
+                                    postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+                                });
+                        });
+                    }
                 });
+        });
+
+    getFromNetworkManager('AssetManager/Asset')
+        .done(function (newAssets) {
+
+            console.log("Assets JSON returned from Asset Manager: " + JSON.stringify(newAssets));
+
+            let ipStreamAssets = newAssets.filter(i => i.AssetType === "IpStream");
+
+            var numberOfIpStreamAssets = ipStreamAssets.length;
+
+            if (numberOfIpStreamAssets > 0) {
+
+                var chosenIpStreamAsset = ipStreamAssets[getRandomNumber(numberOfIpStreamAssets)];
+
+                addCreateIpStreamWindowButton(row, chosenIpStreamAsset);
+            }
         });
 }
 
