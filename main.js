@@ -214,7 +214,7 @@ function addClearLayoutButton(row) {
     });
 }
 
-function addIpStreamWindow(row, chosenIpStreamAsset) {
+function addCreateIpStreamWindowButto(row, chosenIpStreamAsset) {
     addButtonColumnToRow(row, 'Create IP Stream Asset Window', null, function () {
         updateToken()
             .done(function () {
@@ -252,7 +252,7 @@ function loadActions() {
 
                     console.log("Timezones JSON returned: " + JSON.stringify(timezones));
 
-                    var selectedTimezone = timezones[5];
+                    var selectedTimezone = timezones[getRandomNumber(10)];
 
                     addCreateClockButton(row, selectedTimezone, wallInstance);
                 });
@@ -262,9 +262,29 @@ function loadActions() {
 
                     console.log("Assets JSON returned from Asset Manager: " + JSON.stringify(newAssets));
 
-                    var chosenIpStreamAsset = newAssets.filter(i => i.AssetType === "IpStream")[0];
-                    
-                    addIpStreamWindow(row, chosenIpStreamAsset);
+                    let ipStreamAssets = newAssets.filter(i => i.AssetType === "IpStream");
+
+                    var numberOfIpStreamAssets = ipStreamAssets.count;
+
+                    if (numberOfIpStreamAssets >= 0) {
+
+                        var chosenIpStreamAsset = ipStreamAssets[getRandomNumber(numberOfIpStreamAssets)];
+
+                        addCreateIpStreamWindowButto(row, chosenIpStreamAsset);
+                    }
+                });
+
+            getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Assets')
+                .done(function (oldAssets) {
+                    console.log("Assets JSON returned from Wall: " + JSON.stringify(oldAssets));
+
+                    let clockAssets = oldAssets.filter(i => i.AssetType === "NativeApplication" && i.AssetData.NativeApplicationType === 6);
+
+                    var numberOfClockAssets = clockAssets.count;
+
+                    var chosenClockAsset = clockAssets[getRandomNumber(numberOfClockAssets)];
+
+                    console.log("Chosen clock: " + JSON.stringify(chosenClockAsset));
                 });
         });
 }
@@ -274,7 +294,7 @@ function addCreateIpStreamButton(row) {
         updateToken()
             .done(function () {
                 var request = {
-                    Name: "Test IP Stream Asset",
+                    Name: 'Test IP Stream Asset ' + getRandomNumber(10),
                     IpAddress: "https://youtu.be/BCs-llw8EU4"
                 };
 
@@ -288,7 +308,7 @@ function addCreateClockButton(row, selectedTimezone, wallInstance) {
         updateToken()
             .done(function () {
                 var request = {
-                    Name: "Test Clock Asset",
+                    Name: 'Test Clock Asset ' + getRandomNumber(10),
                     BackgroundColor: "Red",
                     DateFontColor: "Black",
                     IsTimer: false,
@@ -305,6 +325,10 @@ function addCreateClockButton(row, selectedTimezone, wallInstance) {
                 postToNetworkManager('Instance/' + wallInstance.InstanceId + '/NativeApplication/Clock', request);
             });
     });
+}
+
+function getRandomNumber(max) {
+    return Math.floor((Math.random() * max) + 1);
 }
 
 function loadAssets() {
