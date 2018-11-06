@@ -214,6 +214,27 @@ function addClearLayoutButton(row) {
     });
 }
 
+function addIpStreamWindow(row, chosenIpStreamAsset) {
+    addButtonColumnToRow(row, 'Create IP Stream Asset Window', null, function () {
+        updateToken()
+            .done(function () {
+                var request = {
+                    AssetData: {IpAddress: chosenIpStreamAsset.IpAddress},
+                    AssetId: chosenIpStreamAsset.AssetId,
+                    AssetType: "IpStream",
+                    CanvasId: canvasId,
+                    WorkspaceId: workspaceId,
+                    Height: 500,
+                    Width: 500,
+                    X: 0,
+                    Y: 0
+                };
+
+                postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+            });
+    });
+}
+
 function loadActions() {
     var row = createContainerStructure('.actions');
 
@@ -234,6 +255,16 @@ function loadActions() {
                     var selectedTimezone = timezones[5];
 
                     addCreateClockButton(row, selectedTimezone, wallInstance);
+                });
+
+            getFromNetworkManager('AssetManager/Asset')
+                .done(function (newAssets) {
+
+                    console.log("Assets JSON returned from Asset Manager: " + JSON.stringify(newAssets));
+
+                    var chosenIpStreamAsset = newAssets.filter(i => i.AssetType === "IpStream")[0];
+                    
+                    addIpStreamWindow(row, chosenIpStreamAsset);
                 });
         });
 }
