@@ -71,6 +71,9 @@ function displayClick(linkElement) {
     loadAssets();
 
     loadActions();
+
+    loadWallInfo();
+
 }
 
 function login() {
@@ -226,6 +229,25 @@ function addClearLayoutButton(row) {
     });
 }
 
+function loadWallInfo() {
+    getFromNetworkManager('Instance')
+        .done(function (instances) {
+
+            console.log("Instances JSON returned: " + JSON.stringify(instances));
+
+            var wallInstance = instances.filter(i => i.InstanceType === "VideoWall")[0];
+
+            getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Wall')
+                .done(function (wallInfo) {
+                    var wallInfoElement = document.getElementsByClassName("wallInfo")[0];
+
+                    wallInfoElement.innerHTML = "Dimensions (H x V): " + wallInfo.HorizontalResolution + " x " + wallInfo.VerticalResolution
+                        + "<br />" + "Horizontal Panels: " + wallInfo.HorizontalPanels
+                        + "<br />" + "Vertical Panels: " + wallInfo.VerticalPanels;
+                });
+        });
+}
+
 function loadActions() {
     var row = createContainerStructure('.actions');
 
@@ -247,21 +269,8 @@ function loadActions() {
 
                     addCreateClockButton(row, selectedTimezone, wallInstance);
                 });
-
-            addButtonColumnToRow(row, 'Get Wall Info', null, function () {
-                updateToken()
-                    .done(function () {
-                        getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Wall')
-                            .done(function (wallInfo) {
-                                var wallInfoElement = document.getElementsByClassName("wallInfo")[0];
-
-                                wallInfoElement.innerHTML = "Dimensions (H x V): " + wallInfo.HorizontalResolution + " x " + wallInfo.VerticalResolution
-                                    + "<br />" + "Horizontal Panels: " + wallInfo.HorizontalPanels
-                                    + "<br />" + "Vertical Panels: " + wallInfo.VerticalPanels;
-                            });
-                    });
-            });
         });
+
 }
 
 function addCreateIpStreamButton(row) {
