@@ -248,6 +248,22 @@ function loadActions() {
                     addCreateClockButton(row, selectedTimezone, wallInstance);
                 });
 
+            addButtonColumnToRow(row, 'Get Wall Info', null, function () {
+                updateToken()
+                    .done(function () {
+                        getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Wall')
+                            .done(function (wallInfo) {
+                                var wallInfoRow = createContainerStructure('.wallInfo');
+
+                                var column = $('<div>');
+                                column.attr('class', 'col-sm-4');
+
+                                wallInfoRow.append(JSON.stringify(wallInfo));
+
+                                column.append(wallInfoRow)
+                            });
+                    });
+            });
         });
 }
 
