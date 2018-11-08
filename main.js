@@ -1,6 +1,6 @@
 var username = 'admin';
 var password = 'cinemassive';
-var networkManagerUrl = 'http://localhost:25002/CineNet/NetworkManager/';
+var networkManagerUrl = 'http://voyager:25002/CineNet/NetworkManager/';
 var accessToken = null;
 var refreshToken = null;
 var currentDisplayId = null;
@@ -239,6 +239,8 @@ function loadWallInfo() {
 
             getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Wall')
                 .done(function (wallInfo) {
+                    console.log("Wall info JSON returned: " + JSON.stringify(wallInfo));
+
                     var wallInfoElement = document.getElementsByClassName("wallInfo")[0];
 
                     wallInfoElement.innerHTML = "Dimensions (H x V): " + wallInfo.HorizontalResolution + " x " + wallInfo.VerticalResolution
@@ -318,6 +320,8 @@ function addGetWindowInfoButton(row) {
             .done(function () {
                 getFromNetworkManager('Display/' + currentDisplayId + '/Window')
                     .done(function (windowInfo) {
+                        console.log("Window info JSON returned: " + JSON.stringify(windowInfo));
+
                         var windowInfoElement = document.getElementsByClassName("windowInfo")[0];
 
                         windowInfoElement.innerHTML = "";
