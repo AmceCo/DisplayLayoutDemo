@@ -276,6 +276,52 @@ function loadActions() {
     addGetWindowInfoButton(row);
 
     addCloseWindowButton(row);
+
+    addUpdateWindowButton(row);
+}
+
+function addUpdateWindowButton(row) {
+    let originalWindowDimensions = {};
+    addButtonColumnToRow(row, 'Update Window', null, function () {
+        updateToken()
+            .done(function () {
+                getFromNetworkManager('Display/' + currentDisplayId + '/Window')
+                    .done(function (windowInfo) {
+                        console.log("Window info JSON returned: " + JSON.stringify(windowInfo));
+
+                        originalWindowDimensions = {
+                            Height: windowInfo[0].Height,
+                            Width: windowInfo[0].Width,
+                            X: windowInfo[0].X,
+                            Y: windowInfo[0].Y
+                        };
+
+                        var request = {
+                            ContentWindows: [windowInfo[0]]
+                        };
+
+                        postToNetworkManager('Display/' + currentDisplayId + '/Window/Close', request);
+
+                        getFromNetworkManager('AssetManager/Asset')
+                            .done(function (assets) {
+
+                                var request = {
+                                    AssetData: {IpAddress: assets[0].IpAddress},
+                                    AssetId: assets[0].AssetId,
+                                    AssetType: assets[0].AssetType,
+                                    CanvasId: canvasId,
+                                    WorkspaceId: workspaceId,
+                                    Height: originalWindowDimensions.Height,
+                                    Width: originalWindowDimensions.Width,
+                                    X: originalWindowDimensions.X,
+                                    Y: originalWindowDimensions.Y
+                                };
+
+                                postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+                            })
+                    });
+            });
+    });
 }
 
 function addCloseWindowButton(row) {
@@ -427,6 +473,15 @@ function addLayoutColumnToRow(row, layout) {
         updateToken()
             .done(function () {
                 postToNetworkManager('Display/' + currentDisplayId + '/Layout/' + layoutId + '/Apply');
+            });
+    });
+
+    addButtonColumnToRow(row, "Overwrite " + layout.Name, layout.LayoutId, function (layoutButton) {
+        var layoutId = $(layoutButton).attr('data-cineNet-id');
+
+        updateToken()
+            .done(function () {
+                postToNetworkManager('Display/' + currentDisplayId + '/Layout/' + layoutId + '/Overwrite');
             });
     });
 }
