@@ -1,6 +1,6 @@
 var username = 'admin';
 var password = 'cinemassive';
-var networkManagerUrl = 'http://voyager:25002/CineNet/NetworkManager/';
+var networkManagerUrl = 'http://localhost:25002/CineNet/NetworkManager/';
 var accessToken = null;
 var refreshToken = null;
 var currentDisplayId = null;
@@ -274,6 +274,26 @@ function loadActions() {
         });
 
     addGetWindowInfoButton(row);
+
+    addCloseWindowButton(row);
+}
+
+function addCloseWindowButton(row) {
+    addButtonColumnToRow(row, 'Close Window', null, function () {
+        updateToken()
+            .done(function () {
+                getFromNetworkManager('Display/' + currentDisplayId + '/Window')
+                    .done(function (windowInfo) {
+                        console.log("Window info JSON returned: " + JSON.stringify(windowInfo));
+
+                        var request = {
+                            ContentWindows: [windowInfo[0]]
+                        };
+
+                        postToNetworkManager('Display/' + currentDisplayId + '/Window/Close', request);
+                    });
+            });
+    });
 }
 
 function addCreateIpStreamButton(row) {
