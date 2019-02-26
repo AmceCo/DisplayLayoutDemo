@@ -9,3 +9,5 @@ This is a demo using the CineNet API to get displays with layouts.  The layouts 
  * 2.  Run in command line 'npm install connect serve-static'
  * 3.  In the command lind navigate to the directory where this file exists
  * 4.  Run in command line 'node server.js'
+ * 5.  The browse to http://localhost:31333/
+ 
