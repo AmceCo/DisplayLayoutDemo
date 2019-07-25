@@ -52,7 +52,7 @@ function loadDisplays() {
 					"BackgroundAssetId":"00000000-0000-0000-0000-000000000000"
 				}
 			]
-			*/	
+			*/
 
 			var displayList = $('.display-selection');
 
@@ -271,9 +271,7 @@ function loadWallInfo() {
 
 			console.log("Instances JSON returned: " + JSON.stringify(instances));
 
-			var wallInstance = instances.filter(i = > i.InstanceType === "VideoWall"
-		)
-			[0];
+			var wallInstance = instances.filter(i => i.InstanceType === "VideoWall")[0];
 
 			getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Wall')
 				.done(function (wallInfo) {
@@ -298,9 +296,7 @@ function loadActions() {
 
 			console.log("Instances JSON returned: " + JSON.stringify(instances));
 
-			var wallInstance = instances.filter(i = > i.InstanceType === "VideoWall"
-		)
-			[0];
+			var wallInstance = instances.filter(i => i.InstanceType === "VideoWall")[0];
 
 			getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/NativeApplication/Clock/AllTimeZones')
 				.done(function (timezones) {
@@ -461,9 +457,7 @@ function loadAssets() {
 
 					console.log("Instances JSON returned: " + JSON.stringify(instances));
 
-					var wallInstance = instances.filter(i = > i.InstanceType === "VideoWall"
-				)
-					[0];
+					var wallInstance = instances.filter(i => i.InstanceType === "VideoWall")[0];
 
 					getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Assets')
 						.done(function (oldAssets) {
