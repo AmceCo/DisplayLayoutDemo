@@ -483,7 +483,7 @@ function loadActions() {
 
 			var wallInstance = instances.filter(i => i.InstanceType === "VideoWall")[0];
 
-			getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/NativeApplication/Clock/AllTimeZones')
+			getFromNetworkManager('AssetManager/Clock/TimeZone')
 				.done(function (timezones) {
 
 					console.log("Timezones JSON returned: " + JSON.stringify(timezones));
