@@ -527,18 +527,13 @@ function addUpdateWindowButton(row) {
 							.done(function (assets) {
 
 								var request = {
-									AssetData: {IpAddress: assets[0].IpAddress},
 									AssetId: assets[0].AssetId,
-									AssetType: assets[0].AssetType,
-									CanvasId: canvasId,
-									WorkspaceId: workspaceId,
-									Height: originalWindowDimensions.Height,
-									Width: originalWindowDimensions.Width,
-									X: originalWindowDimensions.X,
-									Y: originalWindowDimensions.Y
+									Dimension: originalWindowDimensions,
+									Rotation: 0,
+									Opacity: 100
 								};
 
-								postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+								postToNetworkManager('Displays/Display/' + currentDisplayId + '/Window', request);
 							})
 					});
 			});
