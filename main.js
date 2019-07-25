@@ -18,6 +18,42 @@ function loadDisplays() {
 
 			console.log("Display JSON returned: " + JSON.stringify(result));
 
+			/*
+			Example of JSON returned for Get Display call
+			[
+				{
+					"CanvasId":"94042a78-3b44-43da-bfe8-765c99558d0c",
+					"DisplayType":"Render",
+					"GpuInformation":{
+						"Height":1080,
+						"Index":0,
+						"Width":1920,
+						"X":0,
+						"Y":0
+					},
+					"WorkspaceId":"94042a78-3b44-43da-bfe8-765c99558d0c",
+					"Columns":1,
+					"DisplayId":"94042a78-3b44-43da-bfe8-765c99558d0c",
+					"Height":1080,
+					"Left":0,
+					"Name":"1",
+					"Panels":[
+						{
+							"Height":1080,
+							"Width":1920,
+							"X":0,
+							"Y":0
+						}
+					],
+					"Rows":1,
+					"Top":0,
+					"WallInstanceId":"008d2a6f-867a-4e66-a26c-8c77be8c97c1",
+					"Width":1920,
+					"BackgroundAssetId":"00000000-0000-0000-0000-000000000000"
+				}
+			]
+			*/	
+
 			var displayList = $('.display-selection');
 
 			if (displayList) {
