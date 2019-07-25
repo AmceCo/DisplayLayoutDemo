@@ -637,27 +637,21 @@ function loadAssets() {
 
 			console.log("Assets JSON returned from Asset Manager: " + JSON.stringify(assets));
 
-			getFromNetworkManager('Instance')
-				.done(function (instances) {
+			var row = createContainerStructure('.assets');
 
-					console.log("Instances JSON returned: " + JSON.stringify(instances));
+			var loops = Math.ceil(allAssets.length / 3);
+			var currentIndex = 0;
 
-					var row = createContainerStructure('.assets');
+			for (var i = 0; i < loops; i++) {
 
-					var loops = Math.ceil(allAssets.length / 3);
-					var currentIndex = 0;
+				if (currentIndex > assets.length) {
+					break;
+				}
 
-					for (var i = 0; i < loops; i++) {
-
-						if (currentIndex > assets.length) {
-							break;
-						}
-
-						addAssetColumnToRow(row, assets[currentIndex++]);
-						addAssetColumnToRow(row, assets[currentIndex++]);
-						addAssetColumnToRow(row, assets[currentIndex++]);
-					}
-				});
+				addAssetColumnToRow(row, assets[currentIndex++]);
+				addAssetColumnToRow(row, assets[currentIndex++]);
+				addAssetColumnToRow(row, assets[currentIndex++]);
+			}
 		});
 }
 
