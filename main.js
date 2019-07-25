@@ -633,39 +633,30 @@ function getRandomNumber(max) {
 
 function loadAssets() {
 	getFromNetworkManager('AssetManager/Asset')
-		.done(function (newAssets) {
+		.done(function (assets) {
 
-			console.log("Assets JSON returned from Asset Manager: " + JSON.stringify(newAssets));
+			console.log("Assets JSON returned from Asset Manager: " + JSON.stringify(assets));
 
 			getFromNetworkManager('Instance')
 				.done(function (instances) {
 
 					console.log("Instances JSON returned: " + JSON.stringify(instances));
 
-					var wallInstance = instances.filter(i => i.InstanceType === "VideoWall")[0];
+					var row = createContainerStructure('.assets');
 
-					getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Assets')
-						.done(function (oldAssets) {
-							console.log("Assets JSON returned from Wall: " + JSON.stringify(oldAssets));
+					var loops = Math.ceil(allAssets.length / 3);
+					var currentIndex = 0;
 
-							var allAssets = newAssets.concat(oldAssets);
+					for (var i = 0; i < loops; i++) {
 
-							var row = createContainerStructure('.assets');
+						if (currentIndex > assets.length) {
+							break;
+						}
 
-							var loops = Math.ceil(allAssets.length / 3);
-							var currentIndex = 0;
-
-							for (var i = 0; i < loops; i++) {
-
-								if (currentIndex > allAssets.length) {
-									break;
-								}
-
-								addAssetColumnToRow(row, allAssets[currentIndex++]);
-								addAssetColumnToRow(row, allAssets[currentIndex++]);
-								addAssetColumnToRow(row, allAssets[currentIndex++]);
-							}
-						});
+						addAssetColumnToRow(row, assets[currentIndex++]);
+						addAssetColumnToRow(row, assets[currentIndex++]);
+						addAssetColumnToRow(row, assets[currentIndex++]);
+					}
 				});
 		});
 }
