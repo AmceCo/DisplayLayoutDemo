@@ -9,8 +9,18 @@ var canvasId = null;
 
 $(document).ready(function () {
 	login()
+		.then(loadInstances)
 		.then(loadDisplays);
 });
+
+function loadInstances() {
+	getFromNetworkManager('Instance')
+		.done(function (result) {
+			console.log("INSTANCES");
+			console.log(JSON.stringify(result));
+		});
+}
+
 
 function loadDisplays() {
 	getFromNetworkManager('Display')
