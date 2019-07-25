@@ -639,7 +639,7 @@ function loadAssets() {
 
 			var row = createContainerStructure('.assets');
 
-			var loops = Math.ceil(allAssets.length / 3);
+			var loops = Math.ceil(assets.length / 3);
 			var currentIndex = 0;
 
 			for (var i = 0; i < loops; i++) {
