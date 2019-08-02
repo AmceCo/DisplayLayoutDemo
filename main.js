@@ -383,6 +383,24 @@ function getFromNetworkManager(endingUrl) {
 	});
 }
 
+function deleteToNetworkManager(endingUrl) {
+	console.log("DELETE: " + networkManagerUrl + endingUrl);
+
+	return $.ajax({
+		type: "DELETE",
+		url: networkManagerUrl + endingUrl,
+		dataType: 'json',
+		contentType: 'application/json; charset=UTF-8',
+		headers: {
+			'Authorization': 'Bearer ' + accessToken
+		}
+	}).catch(function (result) {
+		if (result.status !== 200) {
+			alert('ERROR: ' + result.statusText + ' | ' + result.responseText);
+		}
+	});
+}
+
 function postToNetworkManager(endingUrl, postData) {
 	console.log("POST: " + networkManagerUrl + endingUrl);
 
