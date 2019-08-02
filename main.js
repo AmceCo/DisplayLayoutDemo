@@ -198,7 +198,7 @@ function loadInstances() {
 
 
 function loadDisplays() {
-	getFromNetworkManager('Display')
+	getFromNetworkManager('Displays/Display')
 		.done(function (result) {
 
 			console.log("Display JSON returned: " + JSON.stringify(result));
