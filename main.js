@@ -589,18 +589,9 @@ function addUpdateWindowButton(row) {
 
 						console.log("Window info JSON returned: " + JSON.stringify(windowInfo));
 
-						originalWindowDimensions = {
-							Height: windowInfo[0].Height,
-							Width: windowInfo[0].Width,
-							X: windowInfo[0].X,
-							Y: windowInfo[0].Y
-						};
+						originalWindowDimensions = windowInfo.Windows[0].ContentWindow.Dimensions;
 
-						var request = {
-							ContentWindows: [windowInfo[0]]
-						};
-
-						deleteToNetworkManager('Displays/Display/' + currentDisplayId + '/Window/' + windowInfo[0].WindowId);
+						deleteToNetworkManager('Displays/Display/' + currentDisplayId + '/Window/' + windowInfo.Windows[0].ContentWindow.WindowId);
 
 						getFromNetworkManager('AssetManager/Asset')
 							.done(function (assets) {
@@ -623,15 +614,11 @@ function addCloseWindowButton(row) {
 	addButtonColumnToRow(row, 'Close Window', null, function () {
 		updateToken()
 			.done(function () {
-				getFromNetworkManager('Display/' + currentDisplayId + '/Window')
+				getFromNetworkManager('Displays/Display/' + currentDisplayId + '/Window')
 					.done(function (windowInfo) {
 						console.log("Window info JSON returned: " + JSON.stringify(windowInfo));
 
-						var request = {
-							ContentWindows: [windowInfo[0]]
-						};
-
-						postToNetworkManager('Display/' + currentDisplayId + '/Window/Close', request);
+						deleteToNetworkManager('Displays/Display/' + currentDisplayId + '/Window/' + windowInfo.Windows[0].ContentWindow.WindowId);
 					});
 			});
 	});
