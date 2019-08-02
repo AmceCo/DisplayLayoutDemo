@@ -492,12 +492,7 @@ function addClearLayoutButton(row) {
 	addButtonColumnToRow(row, 'Clear Wall', null, function () {
 		updateToken()
 			.done(function () {
-				var request = {
-					WorkspaceId: workspaceId,
-					CanvasId: canvasId
-				};
-
-				postToNetworkManager('Display/' + currentDisplayId + '/Window/Clear', request);
+				deleteToNetworkManager('Displays/Display/' + currentDisplayId + '/Window/CloseAll');
 			});
 	});
 }
