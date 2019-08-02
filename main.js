@@ -666,7 +666,7 @@ function addGetWindowInfoButton(row) {
 	addButtonColumnToRow(row, 'Get Info for Windows', null, function () {
 		updateToken()
 			.done(function () {
-				getFromNetworkManager('Display/' + currentDisplayId + '/Window')
+				getFromNetworkManager('Displays/Display/' + currentDisplayId + '/Window')
 					.done(function (windowInfo) {
 						console.log("Window info JSON returned: " + JSON.stringify(windowInfo));
 
@@ -674,14 +674,14 @@ function addGetWindowInfoButton(row) {
 
 						windowInfoElement.innerHTML = "";
 
-						for (var i = 0; i < windowInfo.length; i++) {
+						for (var i = 0; i < windowInfo.Windows.length; i++) {
 
-							windowInfoElement.innerHTML += "AssetName: " + windowInfo[i].AssetName + "<br />" +
-								"Height: " + windowInfo[i].Height + "<br />" +
-								"Width: " + windowInfo[i].Width + "<br />" +
-								"X: " + windowInfo[i].X + "<br />" +
-								"Y: " + windowInfo[i].Y + "<br />" +
-								"WindowType: " + windowInfo[i].WindowType + "<br />" + "<hr>";
+							windowInfoElement.innerHTML += "AssetName: " + windowInfo.Windows[i].Asset.Name + "<br />" +
+								"Height: " + windowInfo.Windows[i].ContentWindow.Dimensions.Height + "<br />" +
+								"Width: " + windowInfo.Windows[i].ContentWindow.Dimensions.Width + "<br />" +
+								"X: " + windowInfo.Windows[i].ContentWindow.Dimensions.X + "<br />" +
+								"Y: " + windowInfo.Windows[i].ContentWindow.Dimensions.Y + "<br />" +
+								"WindowType: " + windowInfo.Windows[i].WindowType + "<br />" + "<hr>";
 						}
 					});
 			});
