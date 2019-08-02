@@ -411,10 +411,44 @@ function postToNetworkManager(endingUrl, postData) {
 }
 
 function loadLayouts() {
-	getFromNetworkManager('Display/' + currentDisplayId + '/Layout')
+	getFromNetworkManager('Displays/Display/' + currentDisplayId + '/Layout')
 		.done(function (layouts) {
 
 			console.log("Layouts JSON returned: " + JSON.stringify(layouts));
+
+/*
+			Example of JSON returned from Get Layouts call
+
+			[
+				{
+					"DisplayId":"4c5a57ab-9c55-438e-b25b-3180fbb7f245",
+					"LayoutId":"1d8a601a-d3a1-4468-ac7f-244d3881927c",
+					"LayoutItems":[
+						{
+							"Asset":{
+								"EncoderType":"HD",
+								"InstanceId":"813c4a5e-1af4-49b8-9b16-e19b6eeb6ed7",
+								"IpAddress":"rtsp://10.111.9.130:8554/",
+								"UnitId":"CB57646",
+								"AssetId":"7ed7e18d-709b-4e35-9fff-47d4b4d24d38",
+								"AssetType":"CineLinkStream",
+								"Name":"CB57646"
+							},
+							"Cropping":null,
+							"Dimension":{
+								"Height":1080,
+								"Width":1920,
+								"X":0,
+								"Y":0
+							},
+							"Opacity":100,
+							"Rotation":0
+						}
+					],
+					"Name":"Layout 1"
+				}
+			]
+*/
 
 			var row = createContainerStructure('.displays');
 
