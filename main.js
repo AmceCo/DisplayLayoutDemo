@@ -6,6 +6,7 @@ var refreshToken = null;
 var currentDisplayId = null;
 var workspaceId = null;
 var canvasId = null;
+var instances = null;
 
 $(document).ready(function () {
 	login()
@@ -192,7 +193,7 @@ function loadInstances() {
 				}
 			]
 			*/
-			
+			instances = result;
 		});
 }
 
