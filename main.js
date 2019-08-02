@@ -543,7 +543,7 @@ function loadActions() {
 			console.log("Timezones JSON returned: " + JSON.stringify(timezones));
 
 /*
-			Example of JSON returned from Get Timezones callBack()
+			Example of JSON returned from Get Timezones call
 
 				[
 					{
@@ -584,8 +584,9 @@ function addUpdateWindowButton(row) {
 	addButtonColumnToRow(row, 'Update Window', null, function () {
 		updateToken()
 			.done(function () {
-				getFromNetworkManager('Display/' + currentDisplayId + '/Window')
+				getFromNetworkManager('Displays/Display/' + currentDisplayId + '/Window')
 					.done(function (windowInfo) {
+
 						console.log("Window info JSON returned: " + JSON.stringify(windowInfo));
 
 						originalWindowDimensions = {
@@ -599,7 +600,7 @@ function addUpdateWindowButton(row) {
 							ContentWindows: [windowInfo[0]]
 						};
 
-						postToNetworkManager('Display/' + currentDisplayId + '/Window/Close', request);
+						deleteToNetworkManager('Displays/Display/' + currentDisplayId + '/Window/' + windowInfo[0].WindowId);
 
 						getFromNetworkManager('AssetManager/Asset')
 							.done(function (assets) {
