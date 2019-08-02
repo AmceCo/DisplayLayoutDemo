@@ -507,6 +507,21 @@ function loadWallInfo() {
 
 			console.log("Wall info JSON returned: " + JSON.stringify(wallInfo));
 
+/*
+			Example of JSON returned from Get Wall callBack()
+
+			{
+				"HorizontalPanels":1,
+				"HorizontalResolution":1920,
+				"InputSystemType":2,
+				"MachineId":"d15bc245-2322-4abd-bdaf-760318ba71c7",
+				"OutputSystemType":3,
+				"VerticalPanels":1,
+				"VerticalResolution":1080,
+				"VideoWallId":1
+			}
+*/
+
 			var wallInfoElement = document.getElementsByClassName("wallInfo")[0];
 
 			wallInfoElement.innerHTML = "Dimensions (H x V): " + wallInfo.HorizontalResolution + " x " + wallInfo.VerticalResolution
@@ -526,6 +541,31 @@ function loadActions() {
 		.done(function (timezones) {
 
 			console.log("Timezones JSON returned: " + JSON.stringify(timezones));
+
+/*
+			Example of JSON returned from Get Timezones callBack()
+
+				[
+					{
+						"Id":"Dateline Standard Time",
+						"DisplayName":"(UTC-12:00) International Date Line West",
+						"StandardName":"Dateline Standard Time",
+						"DaylightName":"Dateline Daylight Time",
+						"BaseUtcOffset":"-12:00:00",
+						"AdjustmentRules":null,
+						"SupportsDaylightSavingTime":false
+					},
+					{
+						"Id":"UTC-11",
+						"DisplayName":"(UTC-11:00) Coordinated Universal Time-11",
+						"StandardName":"UTC-11",
+						"DaylightName":"UTC-11",
+						"BaseUtcOffset":"-11:00:00",
+						"AdjustmentRules":null,
+						"SupportsDaylightSavingTime":false
+					}
+				]
+*/
 
 			var selectedTimezone = timezones[getRandomNumber(10)];
 
