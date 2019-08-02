@@ -499,23 +499,19 @@ function addClearLayoutButton(row) {
 }
 
 function loadWallInfo() {
-	getFromNetworkManager('Instance')
-		.done(function (instances) {
 
-			console.log("Instances JSON returned: " + JSON.stringify(instances));
+	var wallInstance = instances.filter(i => i.InstanceType === "VideoWall")[0];
 
-			var wallInstance = instances.filter(i => i.InstanceType === "VideoWall")[0];
+	getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Wall')
+		.done(function (wallInfo) {
 
-			getFromNetworkManager('Instance/' + wallInstance.InstanceId + '/Wall')
-				.done(function (wallInfo) {
-					console.log("Wall info JSON returned: " + JSON.stringify(wallInfo));
+			console.log("Wall info JSON returned: " + JSON.stringify(wallInfo));
 
-					var wallInfoElement = document.getElementsByClassName("wallInfo")[0];
+			var wallInfoElement = document.getElementsByClassName("wallInfo")[0];
 
-					wallInfoElement.innerHTML = "Dimensions (H x V): " + wallInfo.HorizontalResolution + " x " + wallInfo.VerticalResolution
-						+ "<br />" + "Horizontal Panels: " + wallInfo.HorizontalPanels
-						+ "<br />" + "Vertical Panels: " + wallInfo.VerticalPanels;
-				});
+			wallInfoElement.innerHTML = "Dimensions (H x V): " + wallInfo.HorizontalResolution + " x " + wallInfo.VerticalResolution
+				+ "<br />" + "Horizontal Panels: " + wallInfo.HorizontalPanels
+				+ "<br />" + "Vertical Panels: " + wallInfo.VerticalPanels;
 		});
 }
 
@@ -524,22 +520,16 @@ function loadActions() {
 
 	addCreateIpStreamButton(row);
 
-	getFromNetworkManager('Instance')
-		.done(function (instances) {
+	var wallInstance = instances.filter(i => i.InstanceType === "VideoWall")[0];
 
-			console.log("Instances JSON returned: " + JSON.stringify(instances));
+	getFromNetworkManager('AssetManager/Clock/TimeZone')
+		.done(function (timezones) {
 
-			var wallInstance = instances.filter(i => i.InstanceType === "VideoWall")[0];
+			console.log("Timezones JSON returned: " + JSON.stringify(timezones));
 
-			getFromNetworkManager('AssetManager/Clock/TimeZone')
-				.done(function (timezones) {
+			var selectedTimezone = timezones[getRandomNumber(10)];
 
-					console.log("Timezones JSON returned: " + JSON.stringify(timezones));
-
-					var selectedTimezone = timezones[getRandomNumber(10)];
-
-					addCreateClockButton(row, selectedTimezone, wallInstance);
-				});
+			addCreateClockButton(row, selectedTimezone, wallInstance);
 		});
 
 	addGetWindowInfoButton(row);
