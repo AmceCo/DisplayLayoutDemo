@@ -657,7 +657,7 @@ function addCreateClockButton(row, selectedTimezone, wallInstance) {
 					TimeZoneId: selectedTimezone.Id
 				};
 
-				postToNetworkManager('Instance/' + wallInstance.InstanceId + '/NativeApplication/Clock', request);
+				postToNetworkManager('AssetManager/Clock', request);
 			});
 	});
 }
