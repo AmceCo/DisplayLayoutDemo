@@ -21,7 +21,7 @@ function loadInstances() {
 			console.log("Display JSON returned: " + JSON.stringify(result));
 
 			/*
-			Example of JSON returned for Get Instance call
+			Example of JSON returned from Get Instance call
 			[
 				{
 					"ApiEndpoint":"http://localhost:25015/CineNet/Activity",
@@ -205,7 +205,7 @@ function loadDisplays() {
 			console.log("Display JSON returned: " + JSON.stringify(result));
 
 			/*
-			Example of JSON returned for Get Display call
+			Example of JSON returned from Get Display call
 			[
 				{
 					"CanvasId":"94042a78-3b44-43da-bfe8-765c99558d0c",
@@ -746,7 +746,7 @@ function loadAssets() {
 			console.log("Assets JSON returned from Asset Manager: " + JSON.stringify(assets));
 
 /*
-			Example of JSON from Get Assets call
+			Example of JSON return from Get Assets call
 
 			[
 				{
@@ -878,6 +878,46 @@ function createWindow(asset) {
 			};
 
 			postToNetworkManager('Displays/Display/' + currentDisplayId + '/Window', request);
+
+/*
+			Example of JSON returned from Create Window call
+
+			{
+				"Asset":{
+				"IpAddress":"rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov",
+					"AssetId":"c0894ab9-0254-4c9d-9972-a2ca705db65a",
+					"AssetType":"IpStream",
+					"Name":"Buck Bunny"
+			},
+				"ContentWindow":{
+				"StreamAddress":"rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov",
+					"WindowType":"IpStream",
+					"CanvasDimension":{
+					"Height":1080,
+						"Width":1920,
+						"X":0,
+						"Y":0
+				},
+				"ClosingTransition":"FadeOut",
+					"Dimensions":{
+					"Height":500,
+						"Width":500,
+						"X":0,
+						"Y":0
+				},
+				"Handle":10029,
+					"Hidden":false,
+					"Opacity":100,
+					"OpeningTransition":"FadeIn",
+					"Rotation":0.0,
+					"WindowId":"2929b47f-833e-41ee-a761-fad5772f7a41",
+					"ZOrder":0
+			},
+				"DisplayId":"4c5a57ab-9c55-438e-b25b-3180fbb7f245",
+				"WindowType":"IpStream"
+			}
+*/
+
 		});
 }
 
