@@ -387,6 +387,21 @@ function getToken(samlResponse) {
 		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 		data: body
 	});
+
+/*
+	Example of JSON returned from Get Token call
+
+	{
+		"access_token":"NPTyS1Jged1VaGyuDnNdJMzEkGb1k1364HVzTYCCcRug-xgiWM1LyB4AO0_8te54Bbg0ue0nJ7jwoyF2X6unvofFs_w7uOXWU_jztvRhlQGbZps5l8Y3seQGiRdVoh510EB0cUX_63ts7x6SaIQRpUgnUKd4wTLh13SiPnu0NHbJbfZNc_21SE0KT37gaCimPEhjaq-OccX0U91OmX6gxKYNu8dX0ak2JWt6AAtAjcQf5y3AbRlAiMT3PKT3CXDcJVA6qJqelLqzSMPFW1Hx3xcBDN9YCRxVsFZfyIHmFa8MhgMgudIYtHdJsYUA39-sXAV95qUTioY7z-98_zS7lFnkMQgOC4W4-OYogZkBks4PKytAykC9pjBQuyZJ4RB9",
+		"token_type":"bearer",
+		"expires_in":599,
+		"refresh_token":"bf89bf8c-ccc0-43c6-8408-37c32e2e9582",
+		"userName":"admin",
+		".issued":"Mon, 05 Aug 2019 10:36:40 GMT",
+		".expires":"Mon, 05 Aug 2019 10:46:40 GMT"
+	}
+*/
+
 }
 
 function updateToken() {
@@ -411,6 +426,21 @@ function updateToken() {
 			accessToken = result.access_token;
 			refreshToken = result.refresh_token;
 		});
+
+/*
+	Example of JSON returned from Update Token call
+
+	{
+		"access_token":"B3_zSuMpw-AW4jnLKHohgFda3NbNDdvFwwhKlaenGeWVVov7j7mQwhGjtBMiSzEiwKyiZvSN-HLY_0M3iFHmkZUJDWFLMasdlj9F704V04S7CWbr8CzEj_L1f3kBbuF6izjOo9g5olgJxnTmFoXAVssvOYaMPquBDT3MZVnnStDOqxKd1SZcd66JVhn4Jgyy6z5bvwf_ipfve5ArKFc6eUhq3zzWapEYX-AqFIhgDMO3Ywv-33J0C8jHT4h5vBDSMdJnW3wDWUAbpet2yNu2Fwu9nxMW0dHIsq7hLLxCmBo69z0FRktDxxEUrvOmXzrjPDoaO90Kl_KLvYonI-NQiADfMy_LyD911qZAENYS_cWMgBuDC3i9hdDKaVbON5b8",
+		"token_type":"bearer",
+		"expires_in":599,
+		"refresh_token":"b1aa4e9c-dbaf-471a-885e-8bd7de544e35",
+		"userName":"admin",
+		".issued":"Mon, 05 Aug 2019 10:43:55 GMT",
+		".expires":"Mon, 05 Aug 2019 10:53:55 GMT"
+	}
+*/
+
 }
 
 function getFromNetworkManager(endingUrl) {
