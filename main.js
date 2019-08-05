@@ -577,6 +577,17 @@ function loadActions() {
 	addCloseWindowButton(row);
 
 	addUpdateWindowButton(row);
+
+	addUpdateAvailableAssetsButton(row);
+}
+
+function addUpdateAvailableAssetsButton(row) {
+	addButtonColumnToRow(row, 'Update Available Assets', null, function () {
+		updateToken()
+			.done(function () {
+				loadAssets();
+			});
+	});
 }
 
 function addUpdateWindowButton(row) {
