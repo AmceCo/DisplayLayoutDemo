@@ -508,7 +508,7 @@ function loadWallInfo() {
 			console.log("Wall info JSON returned: " + JSON.stringify(wallInfo));
 
 /*
-			Example of JSON returned from Get Wall callBack()
+			Example of JSON returned from Get Wall call
 
 			{
 				"HorizontalPanels":1,
@@ -588,6 +588,53 @@ function addUpdateWindowButton(row) {
 					.done(function (windowInfo) {
 
 						console.log("Window info JSON returned: " + JSON.stringify(windowInfo));
+
+/*
+						Example of JSON returned from Get Window call
+
+						{
+							"DisplayId":"4c5a57ab-9c55-438e-b25b-3180fbb7f245",
+							"Windows":[
+							{
+								"Asset":{
+									"EncoderType":"HD",
+									"InstanceId":"813c4a5e-1af4-49b8-9b16-e19b6eeb6ed7",
+									"IpAddress":"rtsp://10.111.9.117:8554/",
+									"UnitId":"CB75735",
+									"AssetId":"8b8c7254-d569-4005-b698-95c37e1f96d4",
+									"AssetType":"CineLinkStream",
+									"Name":"CB75735"
+								},
+								"ContentWindow":{
+									"StreamAddress":"rtsp://10.111.9.117:8554/",
+									"WindowType":"IpStream",
+									"CanvasDimension":{
+										"Height":1080,
+										"Width":1920,
+										"X":0,
+										"Y":0
+									},
+									"ClosingTransition":"FadeOut",
+									"Dimensions":{
+										"Height":1080,
+										"Width":1920,
+										"X":0,
+										"Y":0
+									},
+									"Handle":10015,
+									"Hidden":false,
+									"Opacity":100,
+									"OpeningTransition":"FadeIn",
+									"Rotation":0,
+									"WindowId":"d365393c-7ec5-477d-8f07-dd7bfa35cfa7",
+									"ZOrder":0
+								},
+								"DisplayId":"4c5a57ab-9c55-438e-b25b-3180fbb7f245",
+								"WindowType":"IpStream"
+							}
+						]
+						}
+*/
 
 						originalWindowDimensions = windowInfo.Windows[0].ContentWindow.Dimensions;
 
