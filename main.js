@@ -324,6 +324,53 @@ function getSaml() {
 		contentType: 'application/json; charset=utf-8',
 		data: JSON.stringify(body)
 	});
+
+	/*
+		Example of XML returned from Login call
+
+		<?xml version="1.0" encoding="UTF-8"?>
+	<Response xmlns="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Destination="CineNet" IssueInstant="2019-08-05T10:36:40.1864638Z" Version="2.0">
+			<saml:Issuer>CineNet</saml:Issuer>
+		<Status>
+		<StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success" />
+			</Status>
+			<saml:Assertion ID="_608a45b8-9553-4952-a17d-743d93498485" IssueInstant="2019-08-05T10:36:40.1864638Z" Version="2.0">
+			<saml:Conditions NotBefore="2019-08-05T10:36:40.1864638Z" NotOnOrAfter="2019-08-05T10:51:40.1864638Z">
+			<saml:AudienceRestriction>
+		<saml:Audience>CineNet</saml:Audience>
+		</saml:AudienceRestriction>
+		</saml:Conditions>
+		<saml:Issuer>CineNet</saml:Issuer>
+		<saml:AuthnStatement AuthnInstant="2019-08-05T10:36:40.1864638Z" SessionIndex="_608a45b8-9553-4952-a17d-743d93498485">
+			<saml:AuthnContext>
+		<saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified</saml:AuthnContextClassRef>
+		</saml:AuthnContext>
+		</saml:AuthnStatement>
+		<saml:AttributeStatement />
+		<saml:Subject>
+		<saml:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified">admin</saml:NameID>
+			<saml:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
+			<saml:SubjectConfirmationData NotOnOrAfter="2019-08-05T10:51:40.1864638Z" Recipient="CineNet" />
+			</saml:SubjectConfirmation>
+			</saml:Subject>
+			</saml:Assertion>
+			<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+			<SignedInfo>
+			<CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+			<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+			<Reference URI="#_608a45b8-9553-4952-a17d-743d93498485">
+			<Transforms>
+			<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+			<Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+			</Transforms>
+			<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+		<DigestValue>qitIJkaPta7NanT4dE5mR8tK84/fycb3eAp83tYe44k=</DigestValue>
+		</Reference>
+		</SignedInfo>
+		<SignatureValue>Ol3N9eU4ZLmT426jnPgrzkprBfuOWzvZXuOYVxsjvW0zzqmclUGeKP5ioCnoSV2WPitSz6XC5bP1BN+xeVuwN8aRSNmPCNi85G/M/hlFn7LTM+P5dujUF47RfnZQ6tBlBGEKEV1QKQfqD18gKr8tx/7jfW8JYFeikoTmafZicd3d4d31O9ynrafYfka6y0I3sdrCx8M1zrsqLDGSuSH49eZPvjsdzSFQU2BuN/TEQJ9RFIojhBRP5DZ3O7D6PNx5XYKYpD53G9nDnHLiRanrL9EqWvr3y6xFZwPNPX9JHv8nlhtcUgG0Yig5hvcj0sy5jP9l6NEui7aEPPUt92N0pw==</SignatureValue>
+		</Signature>
+		</Response>
+	*/
 }
 
 
