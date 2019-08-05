@@ -855,37 +855,29 @@ function addAssetColumnToRow(row, asset) {
 	var assetName = asset.AssetData ? asset.AssetData.Name : asset.Name;
 
 	addButtonColumnToRow(row, assetName, asset.AssetId, function () {
-		if (asset.AssetType === "CompositeAsset") {
-			createCompositeAssetWindow(asset);
-		}
-		else if (asset.AssetType === "NativeApplication") {
-			createClockWindow(asset);
-		}
-		else if (asset.AssetType === "IpStream") {
-			createIpStreamWindow(asset);
-		}
-		else if (asset.AssetType === "Input") {
-			createInputWindow(asset);
-		}
-		else alert(assetName + ' is a/an ' + asset.AssetType + ' asset!');
+		createWindow(asset);
 	});
 }
 
-function createInputWindow(asset) {
+function createWindow(asset) {
 	updateToken()
 		.done(function () {
-			var request = {
-				AssetId: asset.AssetId,
-				AssetType: asset.AssetType,
-				CanvasId: canvasId,
-				WorkspaceId: workspaceId,
+
+			var dimensionsForWindow = {
 				Height: 500,
 				Width: 500,
 				X: 0,
 				Y: 0
+			}
+
+			var request = {
+				AssetId: asset.AssetId,
+				Dimension: dimensionsForWindow,
+				Rotation: 0,
+				Opacity: 100
 			};
 
-			postToNetworkManager('Display/' + currentDisplayId + '/Window', request);
+			postToNetworkManager('Displays/Display/' + currentDisplayId + '/Window', request);
 		});
 }
 
