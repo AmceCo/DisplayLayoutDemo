@@ -745,6 +745,53 @@ function loadAssets() {
 
 			console.log("Assets JSON returned from Asset Manager: " + JSON.stringify(assets));
 
+/*
+			Example of JSON from Get Assets call
+
+			[
+				{
+					"EncoderType":"HD",
+					"InstanceId":"813c4a5e-1af4-49b8-9b16-e19b6eeb6ed7",
+					"IpAddress":"rtsp://10.111.9.116:8554/",
+					"UnitId":"CB99774",
+					"AssetId":"6284c7f2-0d6e-440f-8916-5b50b7a6bbd5",
+					"AssetType":"CineLinkStream",
+					"Name":"CB99774"
+				},
+				{
+					"EncoderType":"UHD",
+					"InstanceId":"813c4a5e-1af4-49b8-9b16-e19b6eeb6ed7",
+					"IpAddress":"rtsp://10.111.9.139:3049/S4",
+					"UnitId":"A550022",
+					"AssetId":"008a216e-7891-4d29-a902-0bf523166021",
+					"AssetType":"CineLinkStream",
+					"Name":"RTSP, on port 15018"
+				},
+				{
+					"BackgroundColor":"Red",
+					"DateFontColor":"Black",
+					"IsTimer":false,
+					"LocationFontColor":"DarkBlue",
+					"Show24HourTime":true,
+					"ShowDate":true,
+					"ShowLocation":true,
+					"ShowSeconds":true,
+					"TimeFontColor":"Yellow",
+					"TimerDuration":"0",
+					"TimeZoneId":"UTC-11",
+					"AssetId":"90c11917-87b3-463e-a2a2-51830e8699c1",
+					"AssetType":"Clock",
+					"Name":"Test Clock Asset 5"
+				},
+				{
+					"IpAddress":"rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov",
+					"AssetId":"c0894ab9-0254-4c9d-9972-a2ca705db65a",
+					"AssetType":"IpStream",
+					"Name":"Buck Bunny"
+				}
+			]
+*/
+
 			var row = createContainerStructure('.assets');
 
 			var loops = Math.ceil(assets.length / 3);
