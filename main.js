@@ -1,6 +1,6 @@
 var username = 'admin';
 var password = 'cinemassive';
-var networkManagerUrl = 'http://localhost:25002/CineNet/NetworkManager/';
+var networkManagerUrl = 'http://localhost/CineNet/NetworkManager/';
 var accessToken = null;
 var refreshToken = null;
 var currentDisplayId = null;
