@@ -315,11 +315,25 @@ function loadBehaviors() {
 					break;
 				}
 
-				addButtonColumnToRow(row, "Execute Behavior: " + behaviors[currentIndex++].Name, null, null);
-				addButtonColumnToRow(row, "Execute Behavior: " + behaviors[currentIndex++].Name, null, null);
-				addButtonColumnToRow(row, "Execute Behavior: " + behaviors[currentIndex++].Name, null, null);
+				addBehaviorColumnToRow(row, behaviors[currentIndex++]);
+				addBehaviorColumnToRow(row, behaviors[currentIndex++]);
+				addBehaviorColumnToRow(row, behaviors[currentIndex++]);
 			}
 		});
+}
+
+function addBehaviorColumnToRow(row, behavior) {
+	if (!behavior) {
+		return;
+	}
+
+	addButtonColumnToRow(row, behavior.Name, behavior.BehaviorId, function (behaviorButton) {
+		var behaviorId = $(behaviorButton).attr('data-cineNet-id');
+
+		updateToken()
+			.done(function () {
+			});
+	});
 }
 
 function login() {
