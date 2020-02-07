@@ -315,9 +315,9 @@ function loadBehaviors() {
 					break;
 				}
 
-				addAssetColumnToRow(row, behaviors[currentIndex++]);
-				addAssetColumnToRow(row, behaviors[currentIndex++]);
-				addAssetColumnToRow(row, behaviors[currentIndex++]);
+				addButtonColumnToRow(row, "Execute Behavior: " + behaviors[currentIndex++].Name, null, null);
+				addButtonColumnToRow(row, "Execute Behavior: " + behaviors[currentIndex++].Name, null, null);
+				addButtonColumnToRow(row, "Execute Behavior: " + behaviors[currentIndex++].Name, null, null);
 			}
 		});
 }
