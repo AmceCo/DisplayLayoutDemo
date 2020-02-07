@@ -11,7 +11,8 @@ var instances = null;
 $(document).ready(function () {
 	login()
 		.then(loadInstances)
-		.then(loadDisplays);
+		.then(loadDisplays)
+		.then(loadBehaviors);
 });
 
 function loadInstances() {
@@ -295,7 +296,28 @@ function displayClick(linkElement) {
 	loadActions();
 
 	loadWallInfo();
+}
 
+function loadBehaviors() {
+	getFromNetworkManager('Behaviors/Behavior')
+		.done(function (behaviors) {
+
+			var row = createContainerStructure('.behaviors');
+
+			var loops = Math.ceil(behaviors.length / 3);
+			var currentIndex = 0;
+
+			for (var i = 0; i < loops; i++) {
+
+				if (currentIndex > behaviors.length) {
+					break;
+				}
+
+				addAssetColumnToRow(row, behaviors[currentIndex++]);
+				addAssetColumnToRow(row, behaviors[currentIndex++]);
+				addAssetColumnToRow(row, behaviors[currentIndex++]);
+			}
+		});
 }
 
 function login() {
