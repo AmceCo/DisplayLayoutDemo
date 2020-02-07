@@ -332,6 +332,7 @@ function addBehaviorColumnToRow(row, behavior) {
 
 		updateToken()
 			.done(function () {
+				postToNetworkManager('Behaviors/Behavior/' + behaviorId + '/Execute');
 			});
 	});
 }
