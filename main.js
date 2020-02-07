@@ -302,6 +302,8 @@ function loadBehaviors() {
 	getFromNetworkManager('Behaviors/Behavior')
 		.done(function (behaviors) {
 
+			console.log("Behavior JSON returned: " + JSON.stringify(behaviors));
+
 			var row = createContainerStructure('.behaviors');
 
 			var loops = Math.ceil(behaviors.length / 3);
