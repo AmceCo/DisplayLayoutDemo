@@ -304,6 +304,59 @@ function loadBehaviors() {
 
 			console.log("Behavior JSON returned: " + JSON.stringify(behaviors));
 
+			/*
+			Example of JSON returned from Get Behaviors call
+			[
+				{
+					"Actions":[
+						{
+							"DisplayId":"f3138063-41d9-4e9c-a1cf-3d48ee02c849",
+							"ActionId":"6926dfe2-4628-457c-ab6b-b52c20ae4152",
+							"ActionType":"Clear",
+							"BehaviorId":"39de990a-0769-480a-b8c6-523bc5052b82",
+							"ExecutionOrder":1,
+							"InstanceId":"4a46dab1-9f2f-48f3-851f-3e8f067481f0",
+							"IsValid":true,
+							"Name":""
+						}
+					],
+					"BehaviorId":"39de990a-0769-480a-b8c6-523bc5052b82",
+					"Description":null,
+					"ExecutingStatus":"Stopped",
+					"IconUrl":"http://localhost/CineNet/NetworkManager/Icon/Airport_Operations",
+					"IsValid":true,
+					"Loop":false,
+					"LoopDelay":"00:00:30",
+					"Name":"CLEAR DISPLAY 1",
+					"NumberOfLoops":1
+				},
+				{
+					"Actions":[
+						{
+							"DisplayId":"f3138063-41d9-4e9c-a1cf-3d48ee02c849",
+							"LayoutId":"455c0eeb-46f5-4889-8d13-9cf7a3f40d91",
+							"ActionId":"3d8d17b7-4827-4f7d-b317-c537aba30c42",
+							"ActionType":"Layout",
+							"BehaviorId":"e50bd11d-8989-46f9-a792-efd6ddc2df1a",
+							"ExecutionOrder":1,
+							"InstanceId":"4a46dab1-9f2f-48f3-851f-3e8f067481f0",
+							"IsValid":true,
+							"Name":""
+						}
+					],
+					"BehaviorId":"e50bd11d-8989-46f9-a792-efd6ddc2df1a",
+					"Description":null,
+					"ExecutingStatus":"Stopped",
+					"IconUrl":"http://localhost/CineNet/NetworkManager/Icon/Airport_Operations",
+					"IsValid":true,
+					"Loop":false,
+					"LoopDelay":"00:00:30",
+					"Name":"APPLY LAYOUT 1",
+					"NumberOfLoops":1
+				}
+			]
+			*/
+
 			var row = createContainerStructure('.behaviors');
 
 			var loops = Math.ceil(behaviors.length / 3);
