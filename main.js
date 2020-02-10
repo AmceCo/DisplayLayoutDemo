@@ -25,21 +25,21 @@ function loadInstances() {
 			Example of JSON returned from Get Instance call
 			[
 				{
-					"ApiEndpoint":"http://localhost:25015/CineNet/Activity",
+					"ApiEndpoint":"http://localhost/CineNet/Activity",
 					"InstanceId":"94771a29-7a92-448c-8e07-7ee0854429e2",
 					"InstanceName":"Activity",
 					"InstanceType":"Activity",
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25004/CineNet/AlphaControl",
+					"ApiEndpoint":"http://localhost/CineNet/AlphaControl",
 					"InstanceId":"a1330a98-16a3-401f-98d4-9f0c7af4c8a7",
 					"InstanceName":"AlphaControl",
 					"InstanceType":"AlphaControl",
 					"IsPassThrough":false
 				},
 				{
-					"ApiEndpoint":"http://localhost:25011/CineNet/Wall",
+					"ApiEndpoint":"http://localhost/CineNet/Wall",
 					"InstanceId":"f455efa8-310b-4a07-939f-de8dc0498898",
 					"InstanceName":"localhost Alpha",
 					"InstanceType":"Wall",
@@ -53,49 +53,49 @@ function loadInstances() {
 					"IsPassThrough":false
 				},
 				{
-					"ApiEndpoint":"http://localhost:25009/CineNet/Authorization",
+					"ApiEndpoint":"http://localhost/CineNet/Authorization",
 					"InstanceId":"49feadfe-0692-4d4e-97ad-4bfdde4a4a1c",
 					"InstanceName":"Authorization",
 					"InstanceType":"Authorization",
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25017/CineNet/Chat",
+					"ApiEndpoint":"http://localhost/CineNet/Chat",
 					"InstanceId":"11d5706b-1e7f-4b62-99d3-b8434cde8053",
 					"InstanceName":"Chat",
 					"InstanceType":"Chat",
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25591/CineNet/CineAgent",
+					"ApiEndpoint":"http://localhost/CineNet/CineAgent",
 					"InstanceId":"ecbdb3b7-f124-4284-aba2-e1ab68e73fc6",
 					"InstanceName":"localhost CineAgent",
 					"InstanceType":"CineAgent",
 					"IsPassThrough":false
 				},
 				{
-					"ApiEndpoint":"http://localhost:25342/CineNet/CineAgentPoolManager",
+					"ApiEndpoint":"http://localhost/CineNet/CineAgentPoolManager",
 					"InstanceId":"9a097ba6-236e-46ab-856d-fb9b496114f7",
 					"InstanceName":"CineAgentPoolManager",
 					"InstanceType":"CineAgentPoolManager",
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25051/CineNet/DeviceControl",
+					"ApiEndpoint":"http://localhost/CineNet/DeviceControl",
 					"InstanceId":"af3d5a4c-424c-45e7-b4f8-2b9d739c498f",
 					"InstanceName":"Device Control",
 					"InstanceType":"DeviceControl",
 					"IsPassThrough":false
 				},
 				{
-					"ApiEndpoint":"http://localhost:25690/CineNet/FileTransporter",
+					"ApiEndpoint":"http://localhost/CineNet/FileTransporter",
 					"InstanceId":"b84528e2-dc40-44c1-a878-78d8cff37480",
 					"InstanceName":"FileTransporter",
 					"InstanceType":"FileTransporter",
 					"IsPassThrough":false
 				},
 				{
-					"ApiEndpoint":"http://localhost:25008/CineNet/IdentityProvider",
+					"ApiEndpoint":"http://localhost/CineNet/IdentityProvider",
 					"InstanceId":"0243e22c-0712-493e-bdfc-926c8f6f9f3b",
 					"InstanceName":"IdentityProvider",
 					"InstanceType":"IdentityProvider",
@@ -109,84 +109,84 @@ function loadInstances() {
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25150/CineNet/RoomService",
+					"ApiEndpoint":"http://localhost/CineNet/RoomService",
 					"InstanceId":"968a77d3-1350-4cb1-96ec-76eadb893a47",
 					"InstanceName":"RoomService",
 					"InstanceType":"RoomService",
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25250/CineNet/Streaming",
+					"ApiEndpoint":"http://localhost/CineNet/Streaming",
 					"InstanceId":"c3c29909-3124-48f9-b7bc-93edfb9a8463",
 					"InstanceName":"Streaming",
 					"InstanceType":"Streaming",
 					"IsPassThrough":false
 				},
 				{
-					"ApiEndpoint":"http://localhost:25018/CineNet/StreamingEngineCommunicator",
+					"ApiEndpoint":"http://localhost/CineNet/StreamingEngineCommunicator",
 					"InstanceId":"cfe61c63-57dc-49e6-a1c6-916585267971",
 					"InstanceName":"StreamingEngineCommunicator",
 					"InstanceType":"StreamingEngineCommunicator",
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25016/CineNet/UserState",
+					"ApiEndpoint":"http://localhost/CineNet/UserState",
 					"InstanceId":"bb25341f-67e3-4b01-85e5-800ef27c16e2",
 					"InstanceName":"UserState",
 					"InstanceType":"UserState",
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25200/CineNet/VncConnector",
+					"ApiEndpoint":"http://localhost/CineNet/VncConnector",
 					"InstanceId":"11a129a8-2e9a-492b-8a48-c14af464a4ae",
 					"InstanceName":"VncConnector",
 					"InstanceType":"VncConnector",
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25003/CineNet/WebServerManager",
+					"ApiEndpoint":"http://localhost/CineNet/WebServerManager",
 					"InstanceId":"e891a153-ce57-4603-a40d-70f7d0abf787",
 					"InstanceName":"WebServerManager",
 					"InstanceType":"WebServerManager",
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25014/CineNet/DeviceManager",
+					"ApiEndpoint":"http://localhost/CineNet/DeviceManager",
 					"InstanceId":"fdecd34c-191a-43cf-8865-4e70afa61a9b",
 					"InstanceName":"DeviceManager",
 					"InstanceType":"DeviceManager",
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25013/CineNet/WallAsset",
+					"ApiEndpoint":"http://localhost/CineNet/WallAsset",
 					"InstanceId":"c3b7e874-b2d1-47e0-9787-700809d4b38e",
 					"InstanceName":"WallAsset",
 					"InstanceType":"WallAsset",
 					"IsPassThrough":false
 				},
 				{
-					"ApiEndpoint":"http://localhost:25005/CineNet/AssetManager",
+					"ApiEndpoint":"http://localhost/CineNet/AssetManager",
 					"InstanceId":"0b9dbe4e-6e06-4df8-83fe-2041c82be7f0",
 					"InstanceName":"AssetManager",
 					"InstanceType":"AssetManager",
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25010/CineNet/DesktopStreamsMonitor",
+					"ApiEndpoint":"http://localhost/CineNet/DesktopStreamsMonitor",
 					"InstanceId":"059875cd-7b0a-433c-8cc4-8b0261ba05ef",
 					"InstanceName":"DesktopStreamsMonitor",
 					"InstanceType":"DesktopStreamsMonitor",
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25006/CineNet/Displays",
+					"ApiEndpoint":"http://localhost/CineNet/Displays",
 					"InstanceId":"b15fdba9-a252-486e-9f99-15c8437c8075",
 					"InstanceName":"Displays",
 					"InstanceType":"Displays",
 					"IsPassThrough":true
 				},
 				{
-					"ApiEndpoint":"http://localhost:25800/CineNet/Behaviors",
+					"ApiEndpoint":"http://localhost/CineNet/Behaviors",
 					"InstanceId":"f4119012-5461-40b7-9175-b76474110d91",
 					"InstanceName":"Behaviors",
 					"InstanceType":"Behaviors",
@@ -609,18 +609,25 @@ function loadLayouts() {
 
 			[
 				{
-					"DisplayId":"4c5a57ab-9c55-438e-b25b-3180fbb7f245",
-					"LayoutId":"1d8a601a-d3a1-4468-ac7f-244d3881927c",
+					"DisplayId":"f3138063-41d9-4e9c-a1cf-3d48ee02c849",
+					"LayoutId":"455c0eeb-46f5-4889-8d13-9cf7a3f40d91",
 					"LayoutItems":[
 						{
 							"Asset":{
-								"EncoderType":"HD",
-								"InstanceId":"813c4a5e-1af4-49b8-9b16-e19b6eeb6ed7",
-								"IpAddress":"rtsp://10.111.9.130:8554/",
-								"UnitId":"CB57646",
-								"AssetId":"7ed7e18d-709b-4e35-9fff-47d4b4d24d38",
-								"AssetType":"CineLinkStream",
-								"Name":"CB57646"
+								"BackgroundColor":"black",
+								"DateFontColor":"red",
+								"IsTimer":false,
+								"LocationFontColor":"red",
+								"Show24HourTime":false,
+								"ShowDate":false,
+								"ShowLocation":true,
+								"ShowSeconds":false,
+								"TimeFontColor":"red",
+								"TimerDuration":"0",
+								"TimeZoneId":"Dateline Standard Time",
+								"AssetId":"32a89324-c388-4a67-b8f8-a1ba9296c0ec",
+								"AssetType":"Clock",
+								"Name":"CLOCK1"
 							},
 							"Cropping":null,
 							"Dimension":{
@@ -630,7 +637,8 @@ function loadLayouts() {
 								"Y":0
 							},
 							"Opacity":100,
-							"Rotation":0
+							"Rotation":0,
+							"ZOrder":1
 						}
 					],
 					"Name":"Layout 1"
@@ -773,46 +781,61 @@ function addUpdateWindowButton(row) {
 						Example of JSON returned from Get Window call
 
 						{
-							"DisplayId":"4c5a57ab-9c55-438e-b25b-3180fbb7f245",
-							"Windows":[
-							{
-								"Asset":{
-									"EncoderType":"HD",
-									"InstanceId":"813c4a5e-1af4-49b8-9b16-e19b6eeb6ed7",
-									"IpAddress":"rtsp://10.111.9.117:8554/",
-									"UnitId":"CB75735",
-									"AssetId":"8b8c7254-d569-4005-b698-95c37e1f96d4",
-									"AssetType":"CineLinkStream",
-									"Name":"CB75735"
-								},
-								"ContentWindow":{
-									"StreamAddress":"rtsp://10.111.9.117:8554/",
-									"WindowType":"IpStream",
-									"CanvasDimension":{
-										"Height":1080,
-										"Width":1920,
-										"X":0,
-										"Y":0
-									},
-									"ClosingTransition":"FadeOut",
-									"Dimensions":{
-										"Height":1080,
-										"Width":1920,
-										"X":0,
-										"Y":0
-									},
-									"Handle":10015,
-									"Hidden":false,
-									"Opacity":100,
-									"OpeningTransition":"FadeIn",
-									"Rotation":0,
-									"WindowId":"d365393c-7ec5-477d-8f07-dd7bfa35cfa7",
-									"ZOrder":0
-								},
-								"DisplayId":"4c5a57ab-9c55-438e-b25b-3180fbb7f245",
-								"WindowType":"IpStream"
-							}
-						]
+							 "DisplayId":"f3138063-41d9-4e9c-a1cf-3d48ee02c849",
+							 "Windows":[
+									{
+										 "Asset":{
+												"BackgroundColor":"black",
+												"DateFontColor":"red",
+												"IsTimer":false,
+												"LocationFontColor":"red",
+												"Show24HourTime":false,
+												"ShowDate":false,
+												"ShowLocation":true,
+												"ShowSeconds":false,
+												"TimeFontColor":"red",
+												"TimerDuration":"0",
+												"TimeZoneId":"Dateline Standard Time",
+												"AssetId":"32a89324-c388-4a67-b8f8-a1ba9296c0ec",
+												"AssetType":"Clock",
+												"Name":"CLOCK1"
+										 },
+										 "ContentWindow":{
+												"BackgroundColor":"black",
+												"ClockName":"CLOCK1",
+												"DateColor":"red",
+												"Show24HourTime":false,
+												"ShowDate":false,
+												"ShowSeconds":false,
+												"TextColor":"red",
+												"TimeColor":"red",
+												"TimeZone":"Dateline Standard Time",
+												"WindowType":"Clock",
+												"CanvasDimension":{
+													 "Height":1080,
+													 "Width":1920,
+													 "X":0,
+													 "Y":0
+												},
+												"ClosingTransition":"FadeOut",
+												"Dimensions":{
+													 "Height":1080,
+													 "Width":1920,
+													 "X":0,
+													 "Y":0
+												},
+												"Handle":10014,
+												"Hidden":false,
+												"Opacity":100,
+												"OpeningTransition":"FadeIn",
+												"Rotation":0,
+												"WindowId":"0688977c-3457-4581-9b98-3255d047943d",
+												"ZOrder":1
+										 },
+										 "DisplayId":"f3138063-41d9-4e9c-a1cf-3d48ee02c849",
+										 "WindowType":"Clock"
+									}
+							 ]
 						}
 */
 
@@ -932,7 +955,7 @@ function loadAssets() {
 				{
 					"EncoderType":"HD",
 					"InstanceId":"813c4a5e-1af4-49b8-9b16-e19b6eeb6ed7",
-					"IpAddress":"rtsp://10.111.9.116:8554/",
+					"IpAddress":"rtsp://10.111.9.888:8554/",
 					"UnitId":"CB99774",
 					"AssetId":"6284c7f2-0d6e-440f-8916-5b50b7a6bbd5",
 					"AssetType":"CineLinkStream",
@@ -941,7 +964,7 @@ function loadAssets() {
 				{
 					"EncoderType":"UHD",
 					"InstanceId":"813c4a5e-1af4-49b8-9b16-e19b6eeb6ed7",
-					"IpAddress":"rtsp://10.111.9.139:3049/S4",
+					"IpAddress":"rtsp://10.111.9.999:3049/S4",
 					"UnitId":"A550022",
 					"AssetId":"008a216e-7891-4d29-a902-0bf523166021",
 					"AssetType":"CineLinkStream",
