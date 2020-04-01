@@ -13,7 +13,7 @@ This is a demo using the CineNet API to get displays with layouts.  The layouts 
    ```
        var username = 'john';
        var password = 'doe';
-       var networkManagerUrl = 'https://Deathstar:24002/CineNet/NetworkManager/';
+       var networkManagerUrl = 'http://Deathstar:25002/CineNet/NetworkManager/';
    ```
  * 5.  Run in command line 'node server.js'
  * 6.  The browse to http://localhost:31333/
