@@ -7,7 +7,14 @@ This is a demo using the CineNet API to get displays with layouts.  The layouts 
  * To Run
  * 1.  Install Node Js (http://blog.teamtreehouse.com/install-node-js-npm-windows)
  * 2.  Run in command line 'npm install connect serve-static'
- * 3.  In the command lind navigate to the directory where this file exists
- * 4.  Run in command line 'node server.js'
- * 5.  The browse to http://localhost:31333/
+ * 3.  In the command lind navigate to the directory .\DisplayLayoutDemo\
+ * 4.  Update username, password, and networkMangerUrl to match what CineNet system being used
+   * a.  example
+   ```
+       var username = 'john';
+       var password = 'doe';
+       var networkManagerUrl = 'https://Deathstar/CineNet/NetworkManager/';
+   ```
+ * 5.  Run in command line 'node server.js'
+ * 6.  The browse to http://localhost:31333/
  
